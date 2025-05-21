@@ -1,0 +1,147 @@
+
+/*# sourceMappingURL=custom.min.css.map */
+
+
+.navbar-menu .navbar-nav .nav-link {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .625rem 1.5rem;
+    /*  color: var(--vz-vertical-menu-item-color);*/
+
+    color: white;
+    font-size: var(--vz-vertical-menu-item-font-size);
+    font-family: var(--vz-vertical-menu-item-font-family)
+}
+
+.dropdown.topbar-head-dropdown.header-item h4 {
+    color: white;
+}
+
+/*.nav-item:hover a {
+    color: white !important;*/ /* Change this to your desired hover color */
+/*}*/
+
+
+.nav-item a {
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and zoom */
+}
+
+.nav-item {
+    background-color: #1C6A67;
+}
+
+    .nav-item:hover a {
+        color: white !important; /* Hover text color */
+        transform: scale(1.1); /* Zoom effect on hover */
+    }
+
+.navbar-header .user-name-sub-text {
+    color: white;
+}
+
+.navbar-header .user-name-text {
+    color: aliceblue;
+}
+
+.marqueecontainerinfo .headertext {
+    background-color: #0047AB !important;
+}
+
+.btn-primary {
+    background-color: #1C6A67 !important;
+}
+
+    .btn-primary:hover {
+        background-color: #14524F !important;
+    }
+/*
+marquee*/
+.marqueecontainer {
+    position: relative;
+    border: 1px solid #fff !important;
+    vertical-align: middle;
+}
+
+    .marqueecontainer, .marqueecontainer .headertext {
+        /*        padding: 1em;
+*/ color: #626060;
+    }
+
+        .marqueecontainer > .headertext {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-right: 1px solid #fff;
+            color: white;
+            text-shadow: 1px 1px #111;
+            text-align: center;
+            cursor: default;
+            font-weight: bold;
+        }
+
+        .marqueecontainer marquee {
+            line-height: 1.5;
+            font-family: Jost !important;
+            cursor: grab;
+            padding-top: 12px;
+            font-weight: 600;
+        }
+
+            .marqueecontainer marquee p {
+                margin: 0;
+            }
+
+.marqueeinfocontainer {
+    display: flex;
+}
+
+    .marqueeinfocontainer marquee {
+        padding-top: 0.7rem;
+        font-weight: 600;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+.no-wrap {
+    white-space: nowrap;
+    min-width: fit-content;
+    font-weight: 600;
+}
+
+
+
+.waves-light {
+    position: relative; /* Ensure the position is relative */
+    transition: all 0.3s ease; /* Smooth transition for the shadow effect */
+}
+
+    .waves-light:hover {
+        /*box-shadow: 0 4px 20px rgba(0, 0, 255, 0.5);*/ /* Blue shadow on hover */
+        /*background-color: rgba(255, 255, 255, 0.1);*/ /* Optional light background color on hover */
+
+        box-shadow: 0 4px 20px rgba(0, 0, 255, 0.5); /* Blue shadow on hover */
+        background-color: rgba(0, 0, 0, 1);
+    }
+
+.footer {
+    background-image: url('/img/headertxtbg.png');
+    float: none;
+    border-top: 1px solid #e1e1e1;
+    background-repeat: repeat-x;
+    border-bottom: solid 1px #eee;
+    /* background-image: url(../img/headertxtbg.png);*/
+}
+
+.btn-outline-primary:hover {
+    background-color: #0047AB !important;
+}
+
+.hamburger-icon span {
+    background-color: white !important;
+}
