@@ -30,6 +30,7 @@
     <Folder Include="Controllers\HospitalManagement\Common\" />
     <Folder Include="Controllers\HospitalManagement\Reports\" />
     <Folder Include="Controllers\HospitalManagement\Transactions\" />
+    <Folder Include="wwwroot\dist\" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ namespace HospitalManagement.Entities.Models
         public required string  HospitalName { get; set; }
 
         [Required]
-        public int HospitalType { get; set; } 
+        public int HospitalTypeId { get; set; } 
 
         [Required]
         [StringLength(50)]

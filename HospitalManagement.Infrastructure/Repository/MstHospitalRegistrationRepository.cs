@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Data;
 using HospitalManagement.Entities.Models;
+using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Infrastructure.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -45,6 +46,75 @@ namespace HospitalManagement.Infrastructure.Repository
             }
         }
 
+        public List<MstHospitalRegistrationVM> GetAllHospitals()
+        {
+            try
+            {
+                var result = (from mhms in _context.MstHospitalRegistration
+                              join htm in _context.HospitalTypeModel
+                              on mhms.HospitalTypeId equals htm.HospitalTypeID
+                              orderby mhms.HospitalId descending
+                              select new MstHospitalRegistrationVM
+                              {
+                                  HospitalId = mhms.HospitalId,
+                                  HospitalName = mhms.HospitalName,
+                                  HospitalTypeName = htm.HospitalTypeName,
+                                  OwnerName = mhms.OwnerName,
+                                  MedicalLicenseNumber = mhms.MedicalLicenseNumber,
+                                  StaffCount = mhms.StaffCount,
+                                  Address = mhms.Address,
+                                  Email = mhms.Email,
+                                  ContactNumber = mhms.ContactNumber
+                              }).ToList();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<MstHospitalRegistrationVM> GetHospitalById(int hospitalId)
+        {
+            try
+            {
+                var result = (from mhms in _context.MstHospitalRegistration
+                              join htm in _context.HospitalTypeModel
+                              on mhms.HospitalTypeId equals htm.HospitalTypeID
+                              where mhms.HospitalId == hospitalId
+                              select new MstHospitalRegistrationVM
+                              {
+                                  HospitalId = mhms.HospitalId,
+                                  HospitalName = mhms.HospitalName,
+                                  HospitalTypeName = htm.HospitalTypeName,
+                                  OwnerName = mhms.OwnerName,
+                                  MedicalLicenseNumber = mhms.MedicalLicenseNumber,
+                                  StaffCount = mhms.StaffCount,
+                                  Address = mhms.Address,
+                                  Email = mhms.Email,
+                                  ContactNumber = mhms.ContactNumber
+                              }).ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving hospital by ID: {ex.Message}", ex);
+            }
+        }
+        public async Task UpdateHospital(MstHospitalRegistration mstHospitalRegistration, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        {
+            try
+            {
+                _context.MstHospitalRegistration.Update(mstHospitalRegistration);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 
 }

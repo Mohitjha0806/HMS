@@ -1,4 +1,114 @@
-﻿@{
-    Layout = "~/Views/Shared/_MainMaster.cshtml";
+﻿@using HospitalManagement.Entities.ViewModel
+@model MstHospitalRegistrationVM
+
+@{
+    ViewData["Title"] = "Edit Hospital Details";
 }
-<h1>Edit</h1>
+
+
+<div class="card card-border-primary">
+    <div class="card-header">
+        <div class="row px-2">
+            <div class="col-md-6">
+                <h4 class="card-title">
+                    Register Your Hospital
+                </h4>
+            </div>
+            <div class="col-md-6 text-end">
+                <a asp-action="Index" asp-controller="MstHospitalRegistration" class="btn btn-primary shadow sharp me-1">
+                    <i class="fa-solid fa-backward"></i>&nbsp;&nbsp;Go Back
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="UpdateHospital" id="formUpdate" method="post">
+            <div class="form-group">
+                <div class="row px-3">
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Hospital Name</label>
+                        <input type="text" class="form-control" id="txtHospitalName" placeholder="Enter Name" asp-for="HospitalName" />
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Select Hospital Type</label>
+                        <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalTypeName" asp-items="ViewBag.hospitalTypes">
+                            <option selected>Choose...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Owner Name</label>
+                        <input type="text" class="form-control" id="txtOwnerName" maxlength="50" placeholder="Owner Name" asp-for="OwnerName" />
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Medical License Number</label>
+                        <input type="text" max="9999999999" min="0000000000" pattern="[1-9]{1}[0-9]{9}" class="form-control" maxlength="10" placeholder="Medical License Number" asp-for="MedicalLicenseNumber" />
+                    </div>
+                </div>
+                <div class="row px-3">
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Staff Count</label>
+                        <input type="text" min="0" max="50" maxlength="2" class="form-control" placeholder="Enter Count" asp-for="StaffCount" />
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Hospital Address</label>
+                        <input type="text" class="form-control" placeholder="Enter Address" asp-for="Address" />
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Email Id</label>
+                        <input type="text" class="form-control" placeholder="HospitalName@gmial.com" asp-for="Email" />
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Contect Number</label>
+                        <input type="text" class="form-control" placeholder="9893******" asp-for="ContactNumber" />
+                    </div>
+                </div>
+                <div class="row px-3">
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button id="btnUpdate" type="submit" class="btn btn-primary">Update Hospital</button>
+                        <button type="reset" class="btn btn-danger px-5">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/dist/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnUpdate").click(function () {
+            let errormsg = "";
+            if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
+            if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
+            if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
+            if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
+            if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
+            if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
+            if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
+            if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
+
+            if (errormsg !== "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: errormsg
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Do you want to Update the Record?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085D6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes!',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#formUpdate").submit();
+                }
+            });
+        });
+    });
+</script>

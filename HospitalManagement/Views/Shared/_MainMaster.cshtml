@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <meta charset="utf-8" />
-    <title>CWMS - Civil Works Monitoring System</title>
+    <title>HMS - Hospital Managemet System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta content="CWMS - Civil Works Monitoring System" name="description" />
-    <meta content="CWMS" name="author" />
+    <meta content="HMS - Hospital Managemet System" name="description" />
+    <meta content="HMS" name="author" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="assets/images/new-fav-icon-removebg-preview.png">
     <link rel="shortcut icon" src="./img/new-fav-icon-removebg-preview.png" />
@@ -297,15 +297,16 @@
                                 </span>
                                 <span class="logo-lg">
 
-                                    <img src="~/img/DTE-logo-lg.png" height="55" />
+                                    @* <img src="~/img/DTE-logo-lg.png" height="55" /> *@
                                 </span>
                             </a>
                             <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="~/images/logo-sm.svg" alt="" height="50">
+                                    @* <img src="~/images/logo-sm.svg" alt="" height="50"> *@
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="~/img/mainlogoo.jpg" alt="" height="35">
+
+                                    @* <img src="~/img/mainlogoo.jpg" alt="" height="35"> *@
                                 </span>
 
                             </a>
@@ -319,7 +320,7 @@
                             </span>
                         </button>
                         <div class="dropdown topbar-head-dropdown header-item">
-                            <h4>Civil Work's Monitoring System</h4>
+                            <h4>Hospital Managemet System</h4>
                         </div>
                     </div>
 
@@ -371,11 +372,13 @@
             <div class="navbar-brand-box">
                 <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="~/images/logo-sm.svg" alt="" height="50">
+                        <h1 class="text-light bg-bold">HMS</h1>
+                        @* <img src="~/images/logo-sm.svg" alt="" height="50"> *@
                     </span>
-                    <span class="logo-lg">
-                        <img src="~/images/logo-dark.png" alt="" height="35">
-                    </span>
+                    @* <span class="logo-lg"> *@
+                        <h1 class="text-light bg-bold">HMS</h1>
+                        @* <img src="~/images/logo-dark.png" alt="" height="35"> *@
+                    @* </span> *@
                 </a>
                 <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-light">
                     <span class="logo-md logo-sm">
@@ -420,7 +423,7 @@
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarHome">
                                 <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item"><a asp-action="Index" asp-controller="Home" class="nav-link"><i class="ri-file-list-3-line"></i>Home</a></li>
+                                    <li class="nav-item"><a asp-action="Index" asp-controller="Home" class="nav-link"><i class="fa-solid fa-house-chimney fs-6"></i>Home</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -430,7 +433,7 @@
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarHospitalRegistration">
                                 <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item"><a asp-action="Create" asp-controller="MstHospitalRegistration" class="nav-link"><i class="ri-file-list-3-line"></i>Register New Hospital</a></li>
+                                    <li class="nav-item"><a asp-action="Create" asp-controller="MstHospitalRegistration" class="nav-link"><i class="fa-solid fa-plus fs-5"></i>Register New Hospital</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -452,7 +455,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        © Civil Work's Monitoring System.
+                        © Hospital Managemet System.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end d-none d-sm-block">

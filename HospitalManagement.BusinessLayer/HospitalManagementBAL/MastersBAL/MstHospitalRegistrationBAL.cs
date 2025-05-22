@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Entities.Models;
+﻿using HospitalManagement.Entities.ViewModel;
+using HospitalManagement.Entities.Models;
 using HospitalManagement.Infrastructure.Contracts;
 using HospitalManagement.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,7 +41,65 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
             }
         }
 
+        public List<MstHospitalRegistrationVM> GetAllHospitals()
+        {
+            try
+            {
+                return _unitOfWork.MstHospitalRegistrationRepository.GetAllHospitals();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in BAL: {ex.Message}");
+                throw new ApplicationException("Failed to fetch all hospitals.", ex);
+            }
+        }
 
+        public List<MstHospitalRegistrationVM> GetHospitalById(int hospitalId)
+        {
+            try
+            {
+                return _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in BAL: {ex.Message}");
+                throw new ApplicationException("Failed to fetch hospital by ID.", ex);
+            }
+        }
 
+        public void UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        {
+            try
+            {
+                var hospital = _unitOfWork.MstHospitalRegistrationRepository
+                    .GetHospitalById(hospitalId)
+                    .FirstOrDefault();
+
+                if (hospital != null)
+                {
+                    var hospitalEntity = new MstHospitalRegistration
+                    {
+                        HospitalId = hospitalId,
+                        HospitalName = mstHospitalRegistrationVM.HospitalName,
+                        Address = mstHospitalRegistrationVM.Address,
+                        OwnerName = mstHospitalRegistrationVM.OwnerName,
+                        MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
+                        StaffCount = mstHospitalRegistrationVM.StaffCount,
+                        Email = mstHospitalRegistrationVM.Email,
+                        ContactNumber = mstHospitalRegistrationVM.ContactNumber
+                    };
+
+                    _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
+                }
+                else
+                {
+                    throw new Exception("Hospital not found for update.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error updating hospital details: {ex.Message}", ex);
+            }
+        }
     }
 }

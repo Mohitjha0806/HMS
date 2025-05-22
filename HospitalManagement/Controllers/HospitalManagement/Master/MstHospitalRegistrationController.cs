@@ -1,9 +1,11 @@
 ﻿using HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL;
 using HospitalManagement.Data;
+using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SchoolEducationPortal.Utilities;
 
 namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 {
@@ -25,6 +27,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
         public IActionResult Index()
         {
+            Task.FromResult(GetAllHospitals());
             return View();
         }
 
@@ -32,8 +35,8 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         public async Task<IActionResult> Create()
         {
             var hospitalTypes = await Task.FromResult(_mstHospitalRegistrationBAL.GetHospitalTypes());
-            //ViewBag.HospitalTypes = hospitalTypes;
             ViewBag.HospitalTypes = new SelectList(hospitalTypes, "HospitalTypeID", "HospitalTypeName");
+
             return View();
         }
 
@@ -42,13 +45,70 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         [HttpPost]
         public async Task<IActionResult> CreatePost(MstHospitalRegistration mstHospitalRegistration)
         {
-            await _mstHospitalRegistrationBAL.InsertMstHospitalRegister(mstHospitalRegistration);
-            return RedirectToAction("Index");
+            try
+            {
+                await _mstHospitalRegistrationBAL.InsertMstHospitalRegister(mstHospitalRegistration);
+                TempData["Message"] = AlertMessageEnum.GetEnumDisplayName(AlertMessageEnum.AlertMsg.updatetMsg);
+                TempData["Type"] = (int)AlertMessageEnum.AlertCode.sucessCode;
+                return RedirectToAction("Create");
+
+            }
+            catch (Exception)
+            {
+
+                TempData["ErrorMessage"] = "Something went wrong!";
+                throw;
+            }
+        }
+        [HttpGet]
+
+        public IActionResult Edit(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        {
+
+
+            if (hospitalId <= 0)
+            {
+                return BadRequest("Invalid hospital ID.");
+            }
+
+            var result = _mstHospitalRegistrationBAL.GetHospitalById(hospitalId);
+
+            if (result == null)
+            {
+                return NotFound("Hospital not found.");
+            }
+
+            return View(result);
         }
 
-        public IActionResult Edit()
+        [HttpPost]
+        public IActionResult UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(mstHospitalRegistrationVM);
+            }
+
+            try
+            {
+                _mstHospitalRegistrationBAL.UpdateHospital(hospitalId, mstHospitalRegistrationVM);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error updating hospital: {ex.Message}");
+                return View(mstHospitalRegistrationVM);
+            }
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllHospitals()
+        {
+            var hospitals = await Task.FromResult(_mstHospitalRegistrationBAL.GetAllHospitals());
+            return View(hospitals);
+        }   
+
     }
 }

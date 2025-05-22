@@ -9,13 +9,15 @@ namespace HospitalManagement.Entities.ViewModel
 {
     public class MstHospitalRegistrationVM
     {
-        
+
         public int HospitalId { get; set; }
 
         public required string HospitalName { get; set; }
 
         public int HospitalType { get; set; }
+        public int HospitalTypeid{get; set;}
 
+        public string? HospitalTypeName { get; set;}
         public required string OwnerName { get; set; }
         public required string MedicalLicenseNumber { get; set; }
 

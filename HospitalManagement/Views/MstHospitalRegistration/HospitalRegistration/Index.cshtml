@@ -1,7 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_MainMaster.cshtml";
 }
-<div class="card card-border-primary">
+@model List<HospitalManagement.Entities.ViewModel.MstHospitalRegistrationVM>
+<link href="~/datatable/css/datatables.datatables.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<div class="card card-border-primary card">
     <div class="card-header">
         <div class="row px-2">
             <div class="col-md-6">
@@ -11,56 +14,96 @@
             </div>
             <div class="col-md-6 text-end">
                 <a asp-action="Create" asp-controller="MstHospitalRegistration" class="btn btn-primary shadow sharp me-1">
-                    Go Back
+                    <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Hospital
                 </a>
             </div>
         </div>
     </div>
     <div class="card-body">
         <div class="row px-3">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead class="table-primary">
-                        <tr>
-                            <th>S.No.</th>
-                            <th>Hospital Name</th>
-                            <th>Hospital Type</th>
-                            <th>Owner Name</th>
-                            <th>Medical License Number</th>
-                            <th>Staff Count</th>
-                            <th>Address</th>
-                            <th>Email</th>
-                            <th>Contact Number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Hospital A</td>
-                            <td>General</td>
-                            <td>Owner A</td>
-                            <td>MLN12345</td>
-                            <td>150</td>
-                            <td>123 Street, City</td>
-                            <td>hospitalA@example.com</td>
-                            <td>1234567890</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Hospital B</td>
-                            <td>Specialty</td>
-                            <td>Owner B</td>
-                            <td>MLN67890</td>
-                            <td>200</td>
-                            <td>456 Avenue, Town</td>
-                            <td>hospitalB@example.com</td>
-                            <td>9876543210</td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
+            <div div class="col-md-12">
+                <div class="table-responsive">
+
+                    <table id="hospitalTable" class="table table-hover table-striped table-bordered text-center align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Hospital Name</th>
+                                <th>Type</th>
+                                <th>Owner</th>
+                                <th>License No.</th>
+                                <th>Capacity</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                int serialNo = 1;
+                                foreach (var hospital in Model)
+                                {
+                                    <tr>
+                                        <td>@serialNo</td>
+                                        <td>@hospital.HospitalName</td>
+                                        <td>@hospital.HospitalTypeName</td>
+                                        <td>@hospital.OwnerName</td>
+                                        <td>@hospital.MedicalLicenseNumber</td>
+                                        <td>@hospital.StaffCount</td>
+                                        <td>@hospital.Address</td>
+                                        <td>@hospital.Email</td>
+                                        <td>@hospital.ContactNumber</td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-primary" data-id="@hospital.HospitalId" onclick="myCustomEdit(this)">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" data-id="@hospital.HospitalId" onclick="deleteHospital(this)"><i class="fa-solid fa-trash-can"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    serialNo++;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10" class="text-center">No hospitals found.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
+<script src="~/dist/jquery-3.7.1.min.js"></script>
+<script src="~/datatable/js/datatables.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#hospitalTable').DataTable();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    function myCustomEdit(button) {
+        debugger;
+        var hospitalId = button.getAttribute("data-id"); // Correct attribute use karein
+        console.log("Hospital ID:", hospitalId); // Console me correct value check karein
+        window.location.href = '@Url.Action("Edit", "MstHospitalRegistration", new { hospitalId = "ID" })'.replace("ID", hospitalId);
+    }
+</script>
+
+
+
+
