@@ -1,65 +1,77 @@
-﻿@{
+﻿@using HospitalManagement.Entities.Models
+@{
     Layout = "~/Views/Shared/_MainMaster.cshtml";
 }
+@model HospitalManagement.Entities.Models.MstHospitalRegistration
+@{
+    var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
+}
 
-<div class="card">
+
+<div class="card card-border-primary">
     <div class="card-header">
-        <h3 class="card-title">Register Your Hospital</h3>
+        <div class="row px-2">
+            <div class="col-md-6">
+                <h4 class="card-title">
+                    Register Your Hospital
+                </h4>
+            </div>
+            <div class="col-md-6 text-end">
+                <a asp-action="Index" asp-controller="MstHospitalRegistration" class="btn btn-primary shadow sharp me-1">
+                    Go Back
+                </a>
+            </div>
+        </div>
     </div>
     <div class="card-body">
-        <form asp-action="Create" method="post">
+        <form asp-action="CreatePost" method="post">
             <div class="form-group">
                 <div class="row px-3">
-                    <div class="col-md-3 px-2">
-                        <label class="form-label">Enter Hospital Name</label>
-                        <input type="text" class="form-control" id="txtHospitalName" placeholder="Enter Name" />
-                    </div>
+                        <div class="col-md-3 px-2">
+                            <label class="form-label">Enter Hospital Name</label>
+                            <input type="text" class="form-control" id="txtHospitalName" placeholder="Enter Name" asp-for="HospitalName"/>
+                        </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Select Hospital Type</label>
-                        <select class="form-select" id="DDlHospitalType">
+                         <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalType" asp-items="ViewBag.hospitalTypes">
                             <option selected>Choose...</option>
-                            <option value="1">General Hospital</option>
-                            <option value="2">Specialized Hospital</option>
-                            <option value="3">Multi-specialty Hospital</option>
-                            <option value="4">Government Hospital</option>
                         </select>
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Owner Name</label>
-                        <input type="text" class="form-control" id="txtOwnerName" placeholder="Owner Name" />
+                        <input type="text" class="form-control" id="txtOwnerName" maxlength="50" placeholder="Owner Name" asp-for="OwnerName" />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Medical License Number</label>
-                        <input type="text" class="form-control" placeholder="Medical License Number" />
+                        <input type="text" max="9999999999" min="0000000000" pattern="[1-9]{1}[0-9]{9}" class="form-control" maxlength="10" placeholder="Medical License Number" asp-for="MedicalLicenseNumber" />
                     </div>
                 </div>
                 <div class="row px-3">
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Staff Count</label>
-                        <input type="number" min="0" max="50" maxlength="2" class="form-control" placeholder="Enter Count" />
+                        <input type="text" min="0" max="50" maxlength="2" class="form-control" placeholder="Enter Count" asp-for="StaffCount" />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Hospital Address</label>
-                        <input type="text" class="form-control" placeholder="Enter Address" />
+                        <input type="text" class="form-control" placeholder="Enter Address" asp-for="Address" />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Email Id</label>
-                        <input type="text" class="form-control" placeholder="HospitalName@gmial.com" />
+                        <input type="text" class="form-control" placeholder="HospitalName@gmial.com" asp-for="Email" />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Contect Number</label>
-                        <input type="text" class="form-control" placeholder="9893******" />
+                        <input type="text" class="form-control" placeholder="9893******" asp-for="ContactNumber" />
                     </div>
                 </div>
                 <div class="row px-3">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-sm btn-success">Save</button>
-                        <button type="reset" class="btn btn-danger">Clear</button>
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="reset" class="btn btn-danger px-5">Clear</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-

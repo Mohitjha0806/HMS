@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <ProjectReference Include="..\HospitalManagement.Entities\HospitalManagement.Entities.csproj" />
   </ItemGroup>
 
 </Project>

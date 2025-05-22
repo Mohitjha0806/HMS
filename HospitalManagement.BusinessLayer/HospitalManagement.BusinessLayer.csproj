@@ -20,7 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <ProjectReference Include="..\HospitalManagement.Infrastructure\HospitalManagement.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HospitalManagementBAL\ReportsBAL\" />
+    <Folder Include="HospitalManagementBAL\TransactionsBAL\" />
   </ItemGroup>
 
 </Project>

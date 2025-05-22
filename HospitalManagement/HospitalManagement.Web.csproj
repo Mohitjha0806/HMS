@@ -19,4 +19,17 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalManagement.BusinessLayer\HospitalManagement.BusinessLayer.csproj" />
+    <ProjectReference Include="..\HospitalManagement.Data\HospitalManagement.Data.csproj" />
+    <ProjectReference Include="..\HospitalManagement.Entities\HospitalManagement.Entities.csproj" />
+    <ProjectReference Include="..\HospitalManagement.Utilities\HospitalManagement.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\HospitalManagement\Common\" />
+    <Folder Include="Controllers\HospitalManagement\Reports\" />
+    <Folder Include="Controllers\HospitalManagement\Transactions\" />
+  </ItemGroup>
+
 </Project>
