@@ -1,116 +1,68 @@
 ﻿using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Entities.Models;
 using HospitalManagement.Infrastructure.Contracts;
-using HospitalManagement.Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
 {
     public class MstHospitalRegistrationBAL
     {
-        private readonly Infrastructure.Contracts.IUnitOfWorkHMS _unitOfWork;
+        private readonly IUnitOfWorkHMS _unitOfWork;
 
-
-        public MstHospitalRegistrationBAL(Infrastructure.Contracts.IUnitOfWorkHMS unitOfWork)
+        public MstHospitalRegistrationBAL(IUnitOfWorkHMS unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public async Task InsertMstHospitalRegister(MstHospitalRegistration mstHospitalRegistration)
         {
-             await _unitOfWork.MstHospitalRegistrationRepository.InsertMstHospitalRegister(mstHospitalRegistration);
+            await _unitOfWork.MstHospitalRegistrationRepository.InsertMstHospitalRegister(mstHospitalRegistration);
         }
+
         public IEnumerable<HospitalTypeModel> GetHospitalTypes()
         {
-            try
-            {
-                var hospitalTypes = _unitOfWork.MstHospitalRegistrationRepository.BindHospitaltype();
-                return hospitalTypes;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in BAL: {ex.Message}");
-                throw new ApplicationException("Failed to fetch hospital types.", ex);
-            }
+            return _unitOfWork.MstHospitalRegistrationRepository.BindHospitaltype();
         }
 
         public List<MstHospitalRegistrationVM> GetAllHospitals()
         {
-            try
-            {
-                return _unitOfWork.MstHospitalRegistrationRepository.GetAllHospitals();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in BAL: {ex.Message}");
-                throw new ApplicationException("Failed to fetch all hospitals.", ex);
-            }
+            return _unitOfWork.MstHospitalRegistrationRepository.GetAllHospitals();
         }
 
         public MstHospitalRegistrationVM GetHospitalById(int hospitalId)
         {
-            try
+            var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+            if (hospital == null)
             {
-                var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
-
-                if (hospital == null)
-                {
-                    throw new Exception("Hospital not found.");
-                }
-
-                return hospital;
+                throw new Exception("Hospital not found.");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in BAL: {ex.Message}");
-                throw new ApplicationException("Failed to fetch hospital by ID.", ex);
-            }
+            return hospital;
         }
 
-
-
-
-        public void UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        public async Task UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-            try
+            var existingHospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+            if (existingHospital == null)
             {
-                // Retrieve the existing hospital data
-                var existingHospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
-
-                if (existingHospital == null)
-                {
-                    throw new Exception("Hospital not found for update.");
-                }
-
-                var hospitalEntity = new MstHospitalRegistration
-                {
-                    HospitalId = hospitalId,
-                    HospitalName = mstHospitalRegistrationVM.HospitalName,
-                    HospitalTypeId = mstHospitalRegistrationVM.HospitalTypeId,
-                    Address = mstHospitalRegistrationVM.Address,
-                    OwnerName = mstHospitalRegistrationVM.OwnerName,
-                    MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
-                    StaffCount = mstHospitalRegistrationVM.StaffCount,
-                    Email = mstHospitalRegistrationVM.Email,
-                    ContactNumber = mstHospitalRegistrationVM.ContactNumber
-                };
-
-                _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
+                throw new Exception("Hospital not found for update.");
             }
-            catch (Exception ex)
+
+            var hospitalEntity = new MstHospitalRegistration
             {
-                throw new Exception($"Error updating hospital details: {ex.Message}", ex);
-            }
+                HospitalId = hospitalId,
+                HospitalName = mstHospitalRegistrationVM.HospitalName,
+                HospitalTypeId = mstHospitalRegistrationVM.HospitalTypeId,
+                Address = mstHospitalRegistrationVM.Address,
+                OwnerName = mstHospitalRegistrationVM.OwnerName,
+                MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
+                StaffCount = mstHospitalRegistrationVM.StaffCount,
+                Email = mstHospitalRegistrationVM.Email,
+                ContactNumber = mstHospitalRegistrationVM.ContactNumber
+            };
+
+            await _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
         }
-
-
     }
 }
-
