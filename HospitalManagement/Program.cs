@@ -10,13 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(configuration.GetConnectionString("Conn")));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("Conn"))); 
+    options.UseSqlServer(configuration.GetConnectionString("Conn")),
+    ServiceLifetime.Scoped // Ensure Scoped Lifetime
+);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUnitOfWorkHMS, UnitOfWorkHMS>();
 builder.Services.AddScoped<MstHospitalRegistrationBAL>();
+builder.Services.AddScoped<IMstHospitalRegistrationRepository, MstHospitalRegistrationRepository>();
 
 builder.Services.Configure<RazorViewEngineOptions>(options =>
 {

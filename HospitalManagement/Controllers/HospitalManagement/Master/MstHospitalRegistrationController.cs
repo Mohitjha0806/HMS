@@ -76,14 +76,19 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
                 return NotFound("Hospital not found.");
             }
 
+            var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
+            ViewBag.HospitalTypes = hospitalTypes; 
+
             return View(result);
         }
 
 
 
+
         [HttpPost]
         public IActionResult UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
-        {
+             {
+            //int hospitalId = mstHospitalRegistrationVM.HospitalId;
             if (!ModelState.IsValid)
             {
                 return View(mstHospitalRegistrationVM);
@@ -100,6 +105,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
                 return View(mstHospitalRegistrationVM);
             }
         }
+
 
 
 

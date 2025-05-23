@@ -81,34 +81,35 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
         {
             try
             {
-                var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+                // Retrieve the existing hospital data
+                var existingHospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
 
-                if (hospital != null)
-                {
-                    var hospitalEntity = new MstHospitalRegistration
-                    {
-                        HospitalId = hospitalId,
-                        HospitalName = mstHospitalRegistrationVM.HospitalName,
-                        Address = mstHospitalRegistrationVM.Address,
-                        OwnerName = mstHospitalRegistrationVM.OwnerName,
-                        MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
-                        StaffCount = mstHospitalRegistrationVM.StaffCount,
-                        Email = mstHospitalRegistrationVM.Email,
-                        ContactNumber = mstHospitalRegistrationVM.ContactNumber
-                    };
-
-                    _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
-                }
-                else
+                if (existingHospital == null)
                 {
                     throw new Exception("Hospital not found for update.");
                 }
+
+                var hospitalEntity = new MstHospitalRegistration
+                {
+                    HospitalId = hospitalId,
+                    HospitalName = mstHospitalRegistrationVM.HospitalName,
+                    HospitalTypeId = mstHospitalRegistrationVM.HospitalTypeId,
+                    Address = mstHospitalRegistrationVM.Address,
+                    OwnerName = mstHospitalRegistrationVM.OwnerName,
+                    MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
+                    StaffCount = mstHospitalRegistrationVM.StaffCount,
+                    Email = mstHospitalRegistrationVM.Email,
+                    ContactNumber = mstHospitalRegistrationVM.ContactNumber
+                };
+
+                _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error updating hospital details: {ex.Message}", ex);
             }
         }
+
 
     }
 }

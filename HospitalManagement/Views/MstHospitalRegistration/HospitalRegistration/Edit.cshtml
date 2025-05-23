@@ -1,11 +1,31 @@
-﻿@using HospitalManagement.Entities.ViewModel
-@model MstHospitalRegistrationVM
-
+﻿@using HospitalManagement.Entities.Models
 @{
-    ViewData["Title"] = "Edit Hospital Details";
     Layout = "~/Views/Shared/_MainMaster.cshtml";
 }
-
+@model HospitalManagement.Entities.ViewModel.MstHospitalRegistrationVM
+@{
+    var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
+    if (hospitalTypes == null)
+    {
+        hospitalTypes = new List<HospitalTypeModel>(); // Provide a default empty list if null
+    }
+}
+<script>
+    window.onload = function () {
+        if ("@TempData["Message"]" != "") {
+            const alertText = GetDefaultText();
+            if ("@TempData["Type"]" === alertText.successCode) {
+                showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
+            }
+            if ("@TempData["Type"]" === alertText.warningCode) {
+                showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
+            }
+            if ("@TempData["Type"]" === alertText.errorCode) {
+                showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
+            }
+        }
+    }
+</script>
 
 <div class="card card-border-primary">
     <div class="card-header">
@@ -23,50 +43,52 @@
         </div>
     </div>
     <div class="card-body">
-        <form asp-action="UpdateHospital" id="formUpdate" method="post">
+        <form asp-action="UpdateHospital" id="formCreate" method="post">
+            <input type="hidden" asp-for="HospitalId" id="HospitalID" name="HospitalID" value="123" />
+
             <div class="form-group">
                 <div class="row px-3">
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Hospital Name</label>
-                        <input type="text" class="form-control" id="txtHospitalName" placeholder="Enter Name" asp-for="HospitalName" />
+                        <input type="text" class="form-control" id="txtHospitalName" placeholder="Enter Name" asp-for="HospitalName" required />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Select Hospital Type</label>
-                        <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalTypeName" asp-items="ViewBag.hospitalTypes">
-                            <option selected>Choose...</option>
+                        <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalTypeId" asp-items="@(new SelectList(hospitalTypes, "HospitalTypeID", "HospitalTypeName"))" required>
+                            <option selected disabled>Choose...</option>
                         </select>
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Owner Name</label>
-                        <input type="text" class="form-control" id="txtOwnerName" maxlength="50" placeholder="Owner Name" asp-for="OwnerName" />
+                        <input type="text" class="form-control" id="txtOwnerName" maxlength="50" placeholder="Owner Name" asp-for="OwnerName" required />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Medical License Number</label>
-                        <input type="text" max="9999999999" min="0000000000" pattern="[1-9]{1}[0-9]{9}" class="form-control" maxlength="10" placeholder="Medical License Number" asp-for="MedicalLicenseNumber" />
+                        <input id="txtMedicalLicenseNumber" type="text" pattern="[1-9]{1}[0-9]{9}" class="form-control" maxlength="10" placeholder="Medical License Number" asp-for="MedicalLicenseNumber" required />
                     </div>
                 </div>
                 <div class="row px-3">
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Staff Count</label>
-                        <input type="text" min="0" max="50" maxlength="2" class="form-control" placeholder="Enter Count" asp-for="StaffCount" />
+                        <input id="txtStaffCount" type="number" min="0" max="50" class="form-control" placeholder="Enter Count" asp-for="StaffCount" required />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Hospital Address</label>
-                        <input type="text" class="form-control" placeholder="Enter Address" asp-for="Address" />
+                        <input id="HospitalAddress" type="text" class="form-control" placeholder="Enter Address" asp-for="Address" required />
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Email Id</label>
-                        <input type="text" class="form-control" placeholder="HospitalName@gmial.com" asp-for="Email" />
+                        <input id="txtEmail" type="email" class="form-control" placeholder="HospitalName@gmail.com" asp-for="Email" required />
                     </div>
                     <div class="col-md-3 px-2">
-                        <label class="form-label">Enter Contect Number</label>
-                        <input type="text" class="form-control" placeholder="9893******" asp-for="ContactNumber" />
+                        <label class="form-label">Enter Contact Number</label>
+                        <input id="txtContactNumber" type="tel" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
                     </div>
                 </div>
                 <div class="row px-3">
                     <div class="col-md-12 text-center">
                         <hr />
-                        <button id="btnUpdate" type="submit" class="btn btn-primary">Update Hospital</button>
+                        <button id="btnUpdate" type="submit" class="btn btn-success Alert-Confirmation" onclick="myUpdate(this)">Submit</button>
                         <button type="reset" class="btn btn-danger px-5">Clear</button>
                     </div>
                 </div>
@@ -74,6 +96,7 @@
         </form>
     </div>
 </div>
+
 <script src="~/dist/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -86,7 +109,7 @@
             if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
             if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
             if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
-            if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
+            if (!$("#txtContactNumber").val()) errormsg += "Contact Number is required.\n";
 
             if (errormsg !== "") {
                 Swal.fire({
@@ -107,9 +130,10 @@
                 cancelButtonText: 'No'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $("#formUpdate").submit();
+                    $("#formCreate").submit();
                 }
             });
         });
     });
 </script>
+
