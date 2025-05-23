@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace SchoolEducationPortal.Utilities
+namespace HospitalManagement.Utilities
 {
     public static class IpAddressHelper
     {

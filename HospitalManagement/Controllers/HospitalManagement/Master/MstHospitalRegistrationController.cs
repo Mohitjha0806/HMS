@@ -5,7 +5,7 @@ using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Infrastructure.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SchoolEducationPortal.Utilities;
+using HospitalManagement.Utilities.enums;
 
 namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 {

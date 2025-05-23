@@ -1,7 +1,7 @@
 ﻿//using BudgetFinance.Entities.Models;
 //using BudgetFinance.Entities.ViewModels;
 //using BudgetFinance.Infrastructure.Contracts;
-//using SchoolEducationPortal.DAL;
+//using HospitalManagement.DAL;
 //using System;
 //using System.Collections.Generic;
 //using System.Linq;

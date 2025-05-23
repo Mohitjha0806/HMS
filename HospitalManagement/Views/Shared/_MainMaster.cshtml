@@ -203,10 +203,10 @@
         }
 
         /* .w-lg, .btn-success {
-            min-width: 140px;
-            font-size: large;
-            font-weight: bold;
-        } */
+                                                    min-width: 140px;
+                                                    font-size: large;
+                                                    font-weight: bold;
+                                                } */
     </style>
     <style>
         .marqueecontainer {
@@ -291,22 +291,27 @@
                 <div class="navbar-header">
                     <div class="d-flex">
                         <div class="navbar-brand-box horizontal-logo">
-                            <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="~/images/logo-sm.svg" alt="" height="50">
-                                </span>
-                                <span class="logo-lg">
-
-                                    @* <img src="~/img/DTE-logo-lg.png" height="55" /> *@
-                                </span>
-                            </a>
+                            @* <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-dark"> *@
+                            @* <div class="row">
+                                <div class="col-md-6">
+                                    <span class="logo-sm">
+                                        <img src="~/images/v987-18a-removebg-preview.png" alt="" height="45">
+                                    </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="logo-lg">
+                                        @* <img src="~/img/DTE-logo-lg.png" height="55" /> *@
+                            @*    </span>
+                                </div>
+                            </div>
+                            </a>  *@
                             <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-light">
                                 <span class="logo-sm">
-                                    @* <img src="~/images/logo-sm.svg" alt="" height="50"> *@
+                                    <img src="~/images/v987-18a-removebg-preview.png" alt="" height="50">
                                 </span>
                                 <span class="logo-lg">
 
-                                    @* <img src="~/img/mainlogoo.jpg" alt="" height="35"> *@
+                                    <img src="~/images/v987-18a-removebg-preview.png" alt="" height="35">
                                 </span>
 
                             </a>
@@ -369,27 +374,15 @@
             </div>
         </div>
         <div class="app-menu navbar-menu">
-            <div class="navbar-brand-box">
-                <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <h1 class="text-light bg-bold">HMS</h1>
-                        @* <img src="~/images/logo-sm.svg" alt="" height="50"> *@
-                    </span>
-                    @* <span class="logo-lg"> *@
-                        <h1 class="text-light bg-bold">HMS</h1>
-                        @* <img src="~/images/logo-dark.png" alt="" height="35"> *@
-                    @* </span> *@
-                </a>
-                <a href="/mis/Dashboard/AdminDashboard.aspx" class="logo logo-light">
-                    <span class="logo-md logo-sm">
-                        <img src="/img/MPTAAS_LOGO_MP.png" alt="" height="50">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="/img/DTE-logo-lg.png" alt="" height="42">
-                    </span>
-                    <hr style="color: white; margin: 0;" />
-                </a>
-
+            <div class="navbar-brand-box badge-gradient-warning">
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col-md-5 text-end">
+                        <img src="~/images/v987-18a-removebg-preview.png" alt="" height="70">
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center text-start">
+                        <h1 class="text-primary fw-bold">HMS</h1>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
                     <i class="ri-record-circle-line"></i>
                 </button>
