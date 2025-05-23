@@ -75,7 +75,7 @@ namespace HospitalManagement.Infrastructure.Repository
             }
         }
 
-        public List<MstHospitalRegistrationVM> GetHospitalById(int hospitalId)
+        public MstHospitalRegistrationVM GetHospitalById(int hospitalId)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace HospitalManagement.Infrastructure.Repository
                                   Address = mhms.Address,
                                   Email = mhms.Email,
                                   ContactNumber = mhms.ContactNumber
-                              }).ToList();
+                              }).FirstOrDefault();
 
                 return result;
             }
@@ -103,6 +103,9 @@ namespace HospitalManagement.Infrastructure.Repository
                 throw new Exception($"Error retrieving hospital by ID: {ex.Message}", ex);
             }
         }
+
+
+
         public async Task UpdateHospital(MstHospitalRegistration mstHospitalRegistration, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
             try
@@ -115,6 +118,7 @@ namespace HospitalManagement.Infrastructure.Repository
                 throw;
             }
         }
+
     }
 
 }

@@ -15,7 +15,7 @@ namespace HospitalManagement.Entities.ViewModel
         public required string HospitalName { get; set; }
 
         public int HospitalType { get; set; }
-        public int HospitalTypeid{get; set;}
+        public int HospitalTypeId{get; set;}
 
         public string? HospitalTypeName { get; set;}
         public required string OwnerName { get; set; }

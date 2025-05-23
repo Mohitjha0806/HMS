@@ -60,12 +60,10 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
                 throw;
             }
         }
-        [HttpGet]
 
+        [HttpGet]
         public IActionResult Edit(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-
-
             if (hospitalId <= 0)
             {
                 return BadRequest("Invalid hospital ID.");
@@ -80,6 +78,8 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
             return View(result);
         }
+
+
 
         [HttpPost]
         public IActionResult UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)

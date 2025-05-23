@@ -15,7 +15,7 @@ namespace HospitalManagement.Infrastructure.Contracts
 
         public IEnumerable<HospitalTypeModel> BindHospitaltype();
         public List<MstHospitalRegistrationVM> GetAllHospitals();
-        public  List<MstHospitalRegistrationVM> GetHospitalById(int hospitalId);
+        public MstHospitalRegistrationVM GetHospitalById(int hospitalId);
         public Task UpdateHospital(MstHospitalRegistration mstHospitalRegistration, MstHospitalRegistrationVM mstHospitalRegistrationVM);
     }
 }

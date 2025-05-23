@@ -54,11 +54,18 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
             }
         }
 
-        public List<MstHospitalRegistrationVM> GetHospitalById(int hospitalId)
+        public MstHospitalRegistrationVM GetHospitalById(int hospitalId)
         {
             try
             {
-                return _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+                var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+
+                if (hospital == null)
+                {
+                    throw new Exception("Hospital not found.");
+                }
+
+                return hospital;
             }
             catch (Exception ex)
             {
@@ -67,13 +74,14 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
             }
         }
 
+
+
+
         public void UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
             try
             {
-                var hospital = _unitOfWork.MstHospitalRegistrationRepository
-                    .GetHospitalById(hospitalId)
-                    .FirstOrDefault();
+                var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
 
                 if (hospital != null)
                 {
@@ -101,5 +109,7 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
                 throw new Exception($"Error updating hospital details: {ex.Message}", ex);
             }
         }
+
     }
 }
+

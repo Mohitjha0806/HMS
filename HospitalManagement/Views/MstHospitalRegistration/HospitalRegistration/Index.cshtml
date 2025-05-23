@@ -90,16 +90,10 @@
     });
 </script>
 
-
-
-
-
-
 <script>
     function myCustomEdit(button) {
-        debugger;
-        var hospitalId = button.getAttribute("data-id"); // Correct attribute use karein
-        console.log("Hospital ID:", hospitalId); // Console me correct value check karein
+        var hospitalId = button.getAttribute("data-id");
+        console.log("Hospital ID:", hospitalId);
         window.location.href = '@Url.Action("Edit", "MstHospitalRegistration", new { hospitalId = "ID" })'.replace("ID", hospitalId);
     }
 </script>
