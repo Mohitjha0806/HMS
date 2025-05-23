@@ -104,5 +104,26 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
             var hospitals = _mstHospitalRegistrationBAL.GetAllHospitals();
             return View(hospitals);
         }
+
+        public IActionResult Delete(int hospitalId)
+        {
+            try
+            {
+                var deleteTask = _mstHospitalRegistrationBAL.DeleteHospital(hospitalId);
+                deleteTask.Wait(); 
+                bool isDeleted = deleteTask.IsCompletedSuccessfully;
+
+                if (!isDeleted)
+                {
+                    return NotFound(new { message = "Hospital not found." });
+                }
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
     }
 }

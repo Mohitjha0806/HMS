@@ -12,5 +12,6 @@ namespace HospitalManagement.Infrastructure.Contracts
         List<MstHospitalRegistrationVM> GetAllHospitals();
         MstHospitalRegistrationVM GetHospitalById(int hospitalId);
         Task UpdateHospital(MstHospitalRegistration mstHospitalRegistration, MstHospitalRegistrationVM mstHospitalRegistrationVM);
+        public Task DeleteHospital(int hospitalId);
     }
 }

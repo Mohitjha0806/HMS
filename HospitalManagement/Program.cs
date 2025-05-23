@@ -12,10 +12,15 @@ var configuration = builder.Configuration;
 
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(configuration.GetConnectionString("Conn")));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(configuration.GetConnectionString("Conn")),
+//    ServiceLifetime. // Ensure Scoped Lifetime
+//);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("Conn")),
-    ServiceLifetime.Scoped // Ensure Scoped Lifetime
-);
+{
+    var constr = builder.Configuration.GetConnectionString("Conn");
+    options.UseSqlServer(constr);
+});
 
 builder.Services.AddControllersWithViews();
 

@@ -64,5 +64,18 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
 
             await _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
         }
+        public async Task DeleteHospital(int hospitalId)
+        {
+            try
+            {
+                await _unitOfWork.MstHospitalRegistrationRepository.DeleteHospital(hospitalId);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

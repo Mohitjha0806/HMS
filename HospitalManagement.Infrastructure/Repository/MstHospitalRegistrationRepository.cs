@@ -73,5 +73,26 @@ namespace HospitalManagement.Infrastructure.Repository
             _context.MstHospitalRegistration.Update(mstHospitalRegistration);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteHospital(int hospitalId)
+        {
+
+            var hospital = await _context.MstHospitalRegistration.FindAsync(hospitalId);
+            try
+            {
+                if (hospital != null)
+                {
+                    _context.MstHospitalRegistration.Remove(hospital);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
     }
 }

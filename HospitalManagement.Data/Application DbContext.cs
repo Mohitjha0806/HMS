@@ -3,7 +3,7 @@ using HospitalManagement.Entities.Models;
 using HospitalManagement.Entities.ViewModel;
 namespace HospitalManagement.Data
 {
-    public partial class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 
@@ -13,15 +13,16 @@ namespace HospitalManagement.Data
         public DbSet<HospitalTypeModel> HospitalTypeModel { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MstHospitalRegistration>(entity =>
-            {
-                entity.ToTable("MstHospitalRegistration");
-            });
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<MstHospitalRegistration>(entity =>
+            //{
+            //    entity.ToTable("MstHospitalRegistration");
+            //});
 
-            modelBuilder.Entity<HospitalTypeModel>(entity =>
-            {
-                entity.ToTable("HospitalTypeModel");
-            });
+            //modelBuilder.Entity<HospitalTypeModel>(entity =>
+            //{
+            //    entity.ToTable("HospitalTypeModel");
+            //});
         }
     }
 
