@@ -65,7 +65,7 @@ namespace HospitalManagement.Infrastructure.Repository
                         Address = mhms.Address,
                         Email = mhms.Email,
                         ContactNumber = mhms.ContactNumber
-                    }).FirstOrDefault();
+                    }).FirstOrDefault() ?? throw new InvalidOperationException($"Hospital with ID {hospitalId} not found.");
         }
 
         public async Task UpdateHospital(MstHospitalRegistration mstHospitalRegistration, MstHospitalRegistrationVM mstHospitalRegistrationVM)

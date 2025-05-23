@@ -9,16 +9,19 @@
 }
 <script>
     window.onload = function () {
-        if ("@TempData["Message"]" != "") {
+            if ("@TempData["Message"]" != "") {
             const alertText = GetDefaultText();
             if ("@TempData["Type"]" === alertText.successCode) {
-                showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
+            showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
             }
             if ("@TempData["Type"]" === alertText.warningCode) {
-                showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
+            showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
             }
             if ("@TempData["Type"]" === alertText.errorCode) {
-                showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
+            showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
+            }
+            if ("@TempData["Type"]" === alertText.WarningCode) {
+            showSwal(alertText.alertType, alertText.WarningCodeIcon, alertText.WarningCodeBtnTxt, alertText.InvalidCodeHeaderMsg, "@TempData["Message"]");
             }
         }
     }
@@ -40,7 +43,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form asp-action="CreatePost" id="formCreate" method="post">
+        <form asp-action="CreatePost" id="formCreate" method="post" autocomplete="off">
             <div class="form-group">
                 <div class="row px-3">
                     <div class="col-md-3 px-2">
@@ -77,25 +80,23 @@
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Contact Number</label>
-                        <input id="txtContectNumber" type="tel" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
+                        <input id="txtContectNumber" type="tel" pattern="[0-9]{10}" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
                     </div>
                 </div>
                 <div class="row px-3">
                     <div class="col-md-12 text-center">
                         <hr />
-                        <button id="btnSave" type="submit" class="btn btn-success Alert-Confirmation">Submit</button>
+                        <button type="button" id="btnSave" class="btn btn-success btn-border w-lg btn-border">Save</button>
                         <button type="reset" class="btn btn-danger px-5">Clear</button>
                     </div>
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 <script src="~/dist/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        debugger;
         $("#btnSave").click(function () {
             let errormsg = "";
             if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
@@ -115,8 +116,7 @@
                 });
                 return;
             }
-
-            Swal.fire({
+           Swal.fire({
                 title: 'Do you want to Save the Record?',
                 icon: 'warning',
                 showCancelButton: true,
@@ -132,5 +132,3 @@
         });
     });
 </script>
-
-

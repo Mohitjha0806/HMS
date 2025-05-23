@@ -45,12 +45,14 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
             try
             {
                 await _mstHospitalRegistrationBAL.InsertMstHospitalRegister(mstHospitalRegistration);
-                TempData["Message"] = AlertMessageEnum.GetEnumDisplayName(AlertMessageEnum.AlertMsg.updatetMsg);
+                TempData["Message"] = AlertMessageEnum.GetEnumDisplayName(AlertMessageEnum.AlertMsg.insertMsg);
                 TempData["Type"] = (int)AlertMessageEnum.AlertCode.sucessCode;
                 return RedirectToAction("Create");
             }
             catch (Exception)
             {
+                TempData["Message"] = AlertMessageEnum.GetEnumDisplayName(AlertMessageEnum.AlertMsg.alreadyMsg);
+                TempData["Type"] = (int)AlertMessageEnum.AlertCode.WarningCode;
                 TempData["ErrorMessage"] = "Something went wrong!";
                 throw;
             }
