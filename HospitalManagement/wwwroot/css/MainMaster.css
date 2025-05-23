@@ -1,0 +1,256 @@
+﻿
+.section-title {
+    text-align: center;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+th, td {
+    padding: 0.25rem;
+}
+
+.badge {
+    color: black;
+}
+
+.actinCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table, th, td {
+    border: 0.7px solid black;
+}
+
+select, option {
+    background-color: #FFFFFF;
+}
+
+.badge-success {
+    background-color: lightgreen;
+    color: black;
+}
+
+.badge-warning {
+    background-color: yellow;
+    color: black;
+}
+
+.badge-danger {
+    background-color: indianred;
+    color: black;
+}
+
+.section-title h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    padding-bottom: 12px;
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    color: #1b5b5c;
+}
+
+    .section-title h2::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 70px;
+        height: 3.5px;
+        background: #e96b56;
+        bottom: 0;
+        left: calc(50% - 43px);
+    }
+
+.Requiredfeedback {
+    color: red;
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #E46A76 !important;
+}
+
+.multiselect-dropdown.is-invalid, .select2 .selection .is-invalid {
+    border-color: #E46A76 !important;
+    padding-right: calc(1.5em + .75rem);
+    background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="%23e46a76"%3e%3ccircle cx="6" cy="6" r="4.5" /%3e%3cpath stroke-linejoin="round" d="M5.8 3.6h.4L6 6.5z" /%3e%3ccircle cx="6" cy="8.2" r=".6" fill="%23e46a76" stroke="none" /%3e%3c/svg%3e');
+    background-repeat: no-repeat;
+    background-position: right calc(1.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.is-invalid ~ .invalid-feedback, .is-invalid ~ .invalid-tooltip, .was-validated :invalid ~ .invalid-feedback, .was-validated :invalid ~ .invalid-tooltip {
+    position: absolute;
+}
+
+
+
+fieldset {
+    border: 1px solid black !important;
+}
+
+legend {
+    padding: 2px 8px;
+    border-radius: 10px;
+    width: auto;
+    float: inline-start;
+    background: white;
+    margin-top: -1.4em;
+    margin-bottom: 1rem !important;
+    border: 2px solid var(--vz-dark);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--vz-primary);
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+    display: block;
+    max-width: 100%;
+    white-space: normal;
+    padding-inline: 8px;
+}
+
+
+.dropdown-toggle::after {
+    float: right;
+}
+
+
+.form-control:read-only {
+    background-color: #321e461c;
+}
+
+.table > thead {
+    vertical-align: top !important;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+
+
+#navbar-nav span {
+    white-space: nowrap
+}
+
+.table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.table td, .table th {
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: var(--vz-light);
+    color: var(--vz-body-color);
+}
+
+.table tbody {
+    border-top: 2px solid #ddd;
+}
+
+.table thead {
+    border-bottom: 2px solid #ddd;
+}
+
+.card-border-primary {
+    border: 1px solid var(--vz-primary);
+    padding: 0px
+}
+
+    .card-border-primary .card-header {
+        border-bottom: 1px solid var(--vz-primary);
+        margin: 0px
+    }
+
+    .card-border-primary .card-body {
+        padding: 1rem;
+    }
+
+.topbar {
+    background: var(--vz-primary);
+    content: "";
+}
+
+
+
+.marqueecontainer {
+    position: relative;
+    border: 1px solid #777;
+    font-family: 'Oswald',serif;
+}
+
+    .marqueecontainer, .marqueecontainer .headertext {
+        padding: 7px;
+        background-color: #fff;
+        color: #626060;
+        font-weight: bold;
+    }
+
+        .marqueecontainer .headertext {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-right: 1px solid #777;
+            height: 2.7rem;
+            color: white;
+            text-shadow: 1px 1px #111;
+        }
+
+        .marqueecontainer marquee {
+            line-height: 1.5;
+        }
+
+            .marqueecontainer marquee p {
+                margin: 0;
+            }
+
+
+
+.marqueecontainerinfo {
+    position: relative;
+    border: 1px solid #fff !important;
+    vertical-align: middle;
+}
+
+    .marqueecontainerinfo, .marqueecontainerinfo .headertext {
+        color: #626060;
+    }
+
+        .marqueecontainerinfo > .headertext {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-right: 1px solid #fff;
+            color: white;
+            text-shadow: 1px 1px #111;
+            text-align: center;
+            cursor: default;
+            font-weight: bold;
+        }
+
+        .marqueecontainerinfo marquee {
+            line-height: 1.5;
+            font-family: Jost !important;
+            cursor: grab;
+            padding-top: 12px;
+            font-weight: 600;
+        }
+
+            .marqueecontainerinfo marquee p {
+                margin: 0;
+            }
+
+
+
+.navbar-menu .navbar-nav .nav-link {
+    background-color: #1C6A67;
+}
