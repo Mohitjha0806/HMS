@@ -21,7 +21,7 @@
     </div>
     <div class="card-body">
         <div class="row px-3">
-            <div div class="col-md-12">
+            <div class="col-md-12">
                 <div class="table-responsive">
 
                     <table id="hospitalTable" class="table table-hover table-striped table-bordered text-center align-middle">
@@ -36,6 +36,7 @@
                                 <th class="text-center">Address</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Contact</th>
+                                <th class="text-center">IsActive</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -56,6 +57,16 @@
                                         <td class="text-center">@hospital.Email</td>
                                         <td class="text-center">@hospital.ContactNumber</td>
                                         <td class="text-center">
+                                            @if (hospital.IsActive)
+                                            {
+                                                <span class="badge text-bg-success">Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge text-bg-danger">No</span>
+                                            }
+                                        </td>
+                                        <td>
                                             <div class="d-flex gap-2">
                                                 <button class="btn btn-sm btn-primary" data-id="@hospital.HospitalId" onclick="myCustomEdit(this)">
                                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -70,10 +81,10 @@
                             else
                             {
                                 <div class="row">
-                                    <th6 colspan="10" class="text-center">No hospitals found</th6>
+                                    <h6 colspan="10" class="text-center">No hospitals found</h6>
                                 </div>
 
-                                
+
                             }
                         </tbody>
                     </table>
@@ -99,13 +110,9 @@
         window.location.href = '@Url.Action("Edit", "MstHospitalRegistration", new { hospitalId = "ID" })'.replace("ID", hospitalId);
     }
 
-      function myCustomDeletet(button) {
+    function myCustomDeletet(button) {
         var hospitalId = button.getAttribute("data-id");
         console.log("Hospital ID:", hospitalId);
         window.location.href = '@Url.Action("Delete", "MstHospitalRegistration", new { hospitalId = "ID" })'.replace("ID", hospitalId);
     }
 </script>
-
-
-
-

@@ -83,6 +83,14 @@
                         <input id="txtContectNumber" type="tel" pattern="[0-9]{10}" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
                     </div>
                 </div>
+                <div class="row px-4">
+                    <div class="form-check">
+                        <input type="hidden" name="IsActive" value="false" />
+                        <input class="form-check-input fs-5" asp-for="IsActive" type="checkbox">
+                        <label class="form-check-label">Is Active</label>
+
+                    </div>
+                </div>
                 <div class="row px-3">
                     <div class="col-md-12 text-center">
                         <hr />
@@ -96,44 +104,7 @@
 </div>
 <script src="~/dist/jquery-3.7.1.min.js"></script>
 <script>
-    // $(document).ready(function () {
-    //     $("#btnSave").click(function () {
-    //         let errormsg = "";
-    //         if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
-    //         if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
-    //         if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
-    //         if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
-    //         if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
-    //         if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
-    //         if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
-    //         if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
-
-    //         if (errormsg !== "") {
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Validation Error',
-    //                 text: errormsg
-    //             });
-    //             return;
-    //         }
-    //        Swal.fire({
-    //             title: 'Do you want to Save the Record?',
-    //             icon: 'warning',
-    //             showCancelButton: true,
-    //             confirmButtonColor: '#3085D6',
-    //             cancelButtonColor: '#d33',
-    //             confirmButtonText: 'Yes!',
-    //             cancelButtonText: 'No'
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 $("#formCreate").submit();
-    //             }
-    //         });
-    //     });
-    // });
-
-
-
+  
     <script>
              $(document).ready(function () {
         $("#btnSave").click(function (event) {

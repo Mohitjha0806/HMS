@@ -46,7 +46,8 @@ namespace HospitalManagement.Infrastructure.Repository
                         StaffCount = mhms.StaffCount,
                         Address = mhms.Address,
                         Email = mhms.Email,
-                        ContactNumber = mhms.ContactNumber
+                        ContactNumber = mhms.ContactNumber,
+                        IsActive = mhms.IsActive
                     }).ToList();
         }
 
@@ -64,7 +65,8 @@ namespace HospitalManagement.Infrastructure.Repository
                         StaffCount = mhms.StaffCount,
                         Address = mhms.Address,
                         Email = mhms.Email,
-                        ContactNumber = mhms.ContactNumber
+                        ContactNumber = mhms.ContactNumber,
+                        IsActive = mhms.IsActive
                     }).FirstOrDefault() ?? throw new InvalidOperationException($"Hospital with ID {hospitalId} not found.");
         }
 

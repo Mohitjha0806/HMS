@@ -28,5 +28,6 @@ namespace HospitalManagement.Entities.ViewModel
         public required string Email { get; set; }
 
         public required string ContactNumber { get; set; }
+        public bool IsActive { get; set; }
     }
 }

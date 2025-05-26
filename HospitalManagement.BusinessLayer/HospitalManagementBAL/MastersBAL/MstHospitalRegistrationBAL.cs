@@ -59,7 +59,8 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
                 MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
                 StaffCount = mstHospitalRegistrationVM.StaffCount,
                 Email = mstHospitalRegistrationVM.Email,
-                ContactNumber = mstHospitalRegistrationVM.ContactNumber
+                ContactNumber = mstHospitalRegistrationVM.ContactNumber,
+                IsActive = mstHospitalRegistrationVM.IsActive
             };
 
             await _unitOfWork.MstHospitalRegistrationRepository.UpdateHospital(hospitalEntity, mstHospitalRegistrationVM);
