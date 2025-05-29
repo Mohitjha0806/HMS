@@ -7,7 +7,7 @@ namespace HospitalManagement.Infrastructure.Contracts
 {
     public interface IMstHospitalRegistrationRepository
     {
-        Task InsertMstHospitalRegister(MstHospitalRegistration mstHospitalRegistration);
+        Task InsertMstHospitalRegister(MstHospitalRegistrationVM mstHospitalRegistrationVM);
         IEnumerable<HospitalTypeModel> BindHospitaltype();
         List<MstHospitalRegistrationVM> GetAllHospitals();
         MstHospitalRegistrationVM GetHospitalById(int hospitalId);

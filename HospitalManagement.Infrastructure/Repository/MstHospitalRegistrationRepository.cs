@@ -19,12 +19,24 @@ namespace HospitalManagement.Infrastructure.Repository
             _context = context;
         }
 
-        public async Task InsertMstHospitalRegister(MstHospitalRegistration mstHospitalRegistration)
+        public async Task InsertMstHospitalRegister(MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-            await _context.AddAsync(mstHospitalRegistration);
+            var entity = new MstHospitalRegistration
+            {
+                HospitalName = mstHospitalRegistrationVM.HospitalName,
+                HospitalTypeId = mstHospitalRegistrationVM.HospitalTypeId,
+                OwnerName = mstHospitalRegistrationVM.OwnerName,
+                MedicalLicenseNumber = mstHospitalRegistrationVM.MedicalLicenseNumber,
+                StaffCount = mstHospitalRegistrationVM.StaffCount,
+                Address = mstHospitalRegistrationVM.Address,
+                Email = mstHospitalRegistrationVM.Email,
+                ContactNumber = mstHospitalRegistrationVM.ContactNumber,
+                IsActive = mstHospitalRegistrationVM.IsActive
+            };
+
+            await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
-
         public IEnumerable<HospitalTypeModel> BindHospitaltype()
         {
             return _context.HospitalTypeModel.ToList();

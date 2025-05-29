@@ -13,16 +13,13 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
     {
         private readonly MstHospitalRegistrationBAL _mstHospitalRegistrationBAL;
         private readonly IUnitOfWorkHMS _unitOfWork;
-        private readonly ApplicationDbContext _context;
 
         public MstHospitalRegistrationController(
             MstHospitalRegistrationBAL mstHospitalRegistrationBAL,
-            IUnitOfWorkHMS unitOfWork,
-            ApplicationDbContext context)
+            IUnitOfWorkHMS unitOfWork)
         {
             _mstHospitalRegistrationBAL = mstHospitalRegistrationBAL;
             _unitOfWork = unitOfWork;
-            _context = context;
         }
 
         public IActionResult Index()
@@ -40,11 +37,11 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(MstHospitalRegistration mstHospitalRegistration)
+        public async Task<IActionResult> CreatePost(MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
             try
             {
-                await _mstHospitalRegistrationBAL.InsertMstHospitalRegister(mstHospitalRegistration);
+                await _mstHospitalRegistrationBAL.InsertMstHospitalRegister(mstHospitalRegistrationVM);
                 TempData["Message"] = AlertMessageEnum.GetEnumDisplayName(AlertMessageEnum.AlertMsg.insertMsg);
                 TempData["Type"] = (int)AlertMessageEnum.AlertCode.sucessCode;
                 return RedirectToAction("Create");

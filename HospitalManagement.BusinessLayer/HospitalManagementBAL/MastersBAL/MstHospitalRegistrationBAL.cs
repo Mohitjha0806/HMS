@@ -16,9 +16,9 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
             _unitOfWork = unitOfWork;
         }
 
-        public async Task InsertMstHospitalRegister(MstHospitalRegistration mstHospitalRegistration)
+        public async Task InsertMstHospitalRegister(MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-            await _unitOfWork.MstHospitalRegistrationRepository.InsertMstHospitalRegister(mstHospitalRegistration);
+            await _unitOfWork.MstHospitalRegistrationRepository.InsertMstHospitalRegister(mstHospitalRegistrationVM);
         }
 
         public IEnumerable<HospitalTypeModel> GetHospitalTypes()
