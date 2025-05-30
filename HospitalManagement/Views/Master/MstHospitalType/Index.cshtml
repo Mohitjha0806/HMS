@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainMaster.cshtml";
+}
+@model List<HospitalManagement.Entities.ViewModel.HospitalTypeVM>
+<link href="~/datatable/css/datatables.datatables.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<div class="card card-border-primary card">
+    <div class="card-header">
+        <div class="row px-2">
+            <div class="col-md-6">
+                <h4 class="card-title">
+                    hospitalTypes List
+                </h4>
+            </div>
+            <div class="col-md-6 text-end">
+                <a asp-action="Create" asp-controller="MstHospitalType" class="btn btn-primary shadow sharp me-1">
+                    <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add hospitalType
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row px-3">
+            <div class="col-md-12">
+                <div class="table-responsive">
+
+                    <table id="hospitalTypeTable" class="table table-hover table-striped table-bordered text-center align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="text-center">S.No.</th>
+                                <th class="text-center">Hospital Type Name</th>
+                                <th class="text-center">IsActive</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                int serialNo = 1;
+                                foreach (var hospitalType in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">@serialNo</td>
+                                        <td class="text-center">@hospitalType.HospitalTypeName</td>
+                                        <td class="text-center">
+                                            @if (hospitalType.IsActive)
+                                            {
+                                                <span class="badge text-bg-success">Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge text-bg-danger">No</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-primary" data-id="@hospitalType.HospitalTypeId" onclick="myCustomEdit(this)">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" data-id="@hospitalType.HospitalTypeId" onclick="myCustomDeletet(this)"><i class="fa-solid fa-trash-can"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    serialNo++;
+                                }
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <h6 colspan="10" class="text-center">No hospitalTypes found</h6>
+                                </div>
+
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/dist/jquery-3.7.1.min.js"></script>
+<script src="~/datatable/js/datatables.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#hospitalTypeTable').DataTable();
+    });
+</script>
+
+<script>
+    function myCustomEdit(button) {
+        debugger;
+        var HospitalTypeId = button.getAttribute("data-id");
+        console.log("hospitalType ID:", HospitalTypeId);
+        window.location.href = '@Url.Action("Edit", "msthospitalType", new { HospitalTypeId = "ID" })'.replace("ID", HospitalTypeId);
+    }
+
+    function myCustomDeletet(button) {
+        var HospitalTypeId = button.getAttribute("data-id");
+        console.log("hospitalType ID:", HospitalTypeId);
+        window.location.href = '@Url.Action("Delete", "msthospitalType", new { HospitalTypeId = "ID" })'.replace("ID", HospitalTypeId);
+    }
+</script>

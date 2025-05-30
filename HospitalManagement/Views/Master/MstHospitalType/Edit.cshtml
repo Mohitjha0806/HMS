@@ -1,0 +1,73 @@
+﻿@using HospitalManagement.Entities.Models
+@{
+    Layout = "~/Views/Shared/_MainMaster.cshtml";
+}
+
+@model HospitalManagement.Entities.ViewModel.HospitalTypeVM
+
+<script>
+    window.onload = function () {
+        if ("@TempData["Message"]" != "") {
+            const alertText = GetDefaultText();
+
+            switch ("@TempData["Type"]") {
+                case alertText.successCode:
+                    showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
+                    break;
+                case alertText.warningCode:
+                    showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
+                    break;
+                case alertText.errorCode:
+                    showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
+                    break;
+                default:
+                    showSwal(alertText.alertType, alertText.WarningCodeIcon, alertText.WarningCodeBtnTxt, alertText.InvalidCodeHeaderMsg, "@TempData["Message"]");
+                    break;
+            }
+        }
+    };
+</script>
+
+<div class="card card-border-primary">
+    <div class="card-header">
+        <div class="row px-2">
+            <div class="col-md-6">
+                <h4 class="card-title">Register Your Hospital</h4>
+            </div>
+            <div class="col-md-6 text-end">
+                <a asp-action="Index" asp-controller="MstHospitalType" class="btn btn-primary shadow sharp me-1">
+                    <i class="fa-solid fa-backward"></i>&nbsp;&nbsp;Go Back
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form asp-action="UpdateHospital" id="CreateHospitalType" asp-controller="MstHospitalType"
+              method="post" autocomplete="off">
+            <input type="hidden" asp-for="HospitalTypeId" id="HospitalID" name="HospitalTypeID" />
+            <div class="form-group">
+                <div class="row px-3">
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Hospital Type</label>
+                        <input type="text" class="form-control" id="txtHospitalTypeName" placeholder="Enter Hospital Type Name" asp-for="HospitalTypeName" required />
+                    </div>
+                    <div class="col-md-2 px-2 d-flex justify-content-center">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input fs-5" id="txtIsActive" asp-for="IsActive" type="checkbox">
+                            <label class="form-check-label">Is Active</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row px-3">
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button type="submit" id="btnSaveHospitalType" class="btn btn-success btn-border w-lg">Update</button>
+                        <button type="reset" class="btn btn-danger px-5">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -32,7 +32,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         public IActionResult Create()
         {
             var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
-            ViewBag.HospitalTypes = new SelectList(hospitalTypes, "HospitalTypeID", "HospitalTypeName");
+            ViewBag.HospitalTypes = new SelectList(hospitalTypes, "HospitalTypeId", "HospitalTypeName");
             return View();
         }
 

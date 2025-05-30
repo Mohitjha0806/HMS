@@ -20,6 +20,7 @@ namespace HospitalManagement.Infrastructure.Repository
         }
 
         public IMstHospitalRegistrationRepository MstHospitalRegistrationRepository => new MstHospitalRegistrationRepository(_context);
+        public IMstHospitalType MstHospitalTypeRepository => new MstHospitalTypeRepository(_context);
 
     }
 }

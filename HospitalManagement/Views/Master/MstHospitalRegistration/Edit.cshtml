@@ -2,26 +2,26 @@
 @{
     Layout = "~/Views/Shared/_MainMaster.cshtml";
 }
-
-@model HospitalManagement.Entities.Models.MstHospitalRegistration
+@model HospitalManagement.Entities.ViewModel.MstHospitalRegistrationVM
 @{
     var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
+    if (hospitalTypes == null)
+    {
+        hospitalTypes = new List<HospitalTypeModel>(); // Provide a default empty list if null
+    }
 }
 <script>
     window.onload = function () {
-            if ("@TempData["Message"]" != "") {
+        if ("@TempData["Message"]" != "") {
             const alertText = GetDefaultText();
             if ("@TempData["Type"]" === alertText.successCode) {
-            showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
+                showSwal(alertText.alertType, alertText.successCodeIcon, alertText.successCodeBtnTxt, alertText.successCodeHeaderMsg, "@TempData["Message"]");
             }
             if ("@TempData["Type"]" === alertText.warningCode) {
-            showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
+                showSwal(alertText.alertType, alertText.warningCodeIcon, alertText.warningCodeBtnTxt, alertText.warningCodeHeaderMsg, "@TempData["Message"]");
             }
             if ("@TempData["Type"]" === alertText.errorCode) {
-            showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
-            }
-            if ("@TempData["Type"]" === alertText.WarningCode) {
-            showSwal(alertText.alertType, alertText.WarningCodeIcon, alertText.WarningCodeBtnTxt, alertText.InvalidCodeHeaderMsg, "@TempData["Message"]");
+                showSwal(alertText.alertType, alertText.errorCodeIcon, alertText.errorCodeBtnTxt, alertText.errorCodeHeaderMsg, "@TempData["Message"]");
             }
         }
     }
@@ -43,7 +43,9 @@
         </div>
     </div>
     <div class="card-body">
-        <form asp-action="CreatePost" id="formCreate" method="post" autocomplete="off">
+        <form asp-action="UpdateHospital" id="formCreate" method="post">
+            <input type="hidden" asp-for="HospitalId" id="HospitalID" name="HospitalID"/>
+
             <div class="form-group">
                 <div class="row px-3">
                     <div class="col-md-3 px-2">
@@ -52,7 +54,7 @@
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Select Hospital Type</label>
-                        <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalTypeId" asp-items="ViewBag.hospitalTypes" required>
+                        <select class="form-select" id="hospitalTypeDropdown" asp-for="HospitalTypeId" asp-items="@(new SelectList(hospitalTypes, "HospitalTypeId", "HospitalTypeName"))" required>
                             <option selected disabled>Choose...</option>
                         </select>
                     </div>
@@ -80,20 +82,19 @@
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Contact Number</label>
-                        <input id="txtContectNumber" type="tel" pattern="[0-9]{10}" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
+                        <input id="txtContactNumber" type="tel" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
                     </div>
                 </div>
                 <div class="row px-4">
                     <div class="form-check">
-                        <input class="form-check-input fs-5" asp-for="IsActive" type="checkbox">
-                        <label class="form-check-label">Is Active</label>
-
+                        <label class="form-check-label" for="checkChecked">IsActive</label>
+                        <input class="form-check-input fs-5" asp-for="IsActive">
                     </div>
                 </div>
                 <div class="row px-3">
                     <div class="col-md-12 text-center">
                         <hr />
-                        <button type="submit" id="btnSave" class="btn btn-success btn-border w-lg btn-border">Save</button>
+                        <button id="btnUpdate" type="submit" class="btn btn-success Alert-Confirmation" onclick="myUpdate(this)">Submit</button>
                         <button type="reset" class="btn btn-danger px-5">Clear</button>
                     </div>
                 </div>
@@ -101,32 +102,32 @@
         </form>
     </div>
 </div>
+
 <script src="~/dist/jquery-3.7.1.min.js"></script>
 <script>
-  
-    <script>
-             $(document).ready(function () {
-        $("#btnSave").click(function (event) {
-            event.preventDefault(); // Prevent default form submission
+    $(document).ready(function () {
+        $("#btnUpdate").click(function () {
             let errormsg = "";
-           if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
+            if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
             if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
             if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
             if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
             if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
             if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
             if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
-            if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
+            if (!$("#txtContactNumber").val()) errormsg += "Contact Number is required.\n";
+
             if (errormsg !== "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Validation Error',
                     text: errormsg
                 });
-                return; // Stop further execution
+                return;
             }
+
             Swal.fire({
-                title: 'Do you want to Save the Record?',
+                title: 'Do you want to Update the Record?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085D6',
@@ -140,10 +141,5 @@
             });
         });
     });
-
-
-
-
-
-
 </script>
+

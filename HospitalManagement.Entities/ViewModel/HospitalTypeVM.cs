@@ -10,7 +10,8 @@ namespace HospitalManagement.Entities.ViewModel
     public class HospitalTypeVM
     {
         [Key]
-        public int HospitalTypeID { get; set; }
+        public int HospitalTypeId { get; set; }
         public required string HospitalTypeName { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -11,18 +11,11 @@ namespace HospitalManagement.Data
         }
         public DbSet<MstHospitalRegistration> MstHospitalRegistration { get; set; }
         public DbSet<HospitalTypeModel> HospitalTypeModel { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<MstHospitalRegistration>(entity =>
-            //{
-            //    entity.ToTable("MstHospitalRegistration");
-            //});
-
-            //modelBuilder.Entity<HospitalTypeModel>(entity =>
-            //{
-            //    entity.ToTable("HospitalTypeModel");
-            //});
+            
         }
     }
 

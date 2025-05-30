@@ -39,14 +39,16 @@ namespace HospitalManagement.Infrastructure.Repository
         }
         public IEnumerable<HospitalTypeModel> BindHospitaltype()
         {
-            return _context.HospitalTypeModel.ToList();
+            return _context.HospitalTypeModel
+                .Where(h => h.IsActive == true)
+                .ToList();
         }
 
         public List<MstHospitalRegistrationVM> GetAllHospitals()
         {
             return (from mhms in _context.MstHospitalRegistration
                     join htm in _context.HospitalTypeModel
-                    on mhms.HospitalTypeId equals htm.HospitalTypeID
+                    on mhms.HospitalTypeId equals htm.HospitalTypeId
                     orderby mhms.HospitalId descending
                     select new MstHospitalRegistrationVM
                     {

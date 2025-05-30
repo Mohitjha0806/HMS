@@ -10,12 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(configuration.GetConnectionString("Conn")));
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(configuration.GetConnectionString("Conn")),
-//    ServiceLifetime. // Ensure Scoped Lifetime
-//);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var constr = builder.Configuration.GetConnectionString("Conn");
@@ -25,15 +19,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUnitOfWorkHMS, UnitOfWorkHMS>();
+builder.Services.AddScoped<UnitOfWorkHMS>();
+
 builder.Services.AddScoped<MstHospitalRegistrationBAL>();
 builder.Services.AddScoped<IMstHospitalRegistrationRepository, MstHospitalRegistrationRepository>();
+builder.Services.AddScoped<HospitalTypeBAL>();
+builder.Services.AddScoped<IMstHospitalType, MstHospitalTypeRepository>();
 
 builder.Services.Configure<RazorViewEngineOptions>(options =>
 {
     options.ViewLocationFormats.Clear();
     options.ViewLocationFormats.Add("/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
+    options.ViewLocationFormats.Add("/Views/Master/{1}/{0}" + RazorViewEngine.ViewExtension);
     options.ViewLocationFormats.Add("/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
-    options.ViewLocationFormats.Add("/Views/MstHospitalRegistration/HospitalRegistration/{0}" + RazorViewEngine.ViewExtension);
 });
 
 var app = builder.Build();

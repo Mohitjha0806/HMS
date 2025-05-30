@@ -9,5 +9,6 @@ namespace HospitalManagement.Infrastructure.Contracts
     public interface IUnitOfWorkHMS 
     {
         IMstHospitalRegistrationRepository MstHospitalRegistrationRepository { get; }
+        IMstHospitalType MstHospitalTypeRepository { get; }
     }
 }
