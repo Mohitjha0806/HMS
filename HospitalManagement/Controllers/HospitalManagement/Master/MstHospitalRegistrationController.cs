@@ -29,10 +29,16 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int DivisionId)
         {
             var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
+            var divisions = _mstHospitalRegistrationBAL.GetDivision();
+            var districts = _mstHospitalRegistrationBAL.GetDistrict(DivisionId);
+
             ViewBag.HospitalTypes = new SelectList(hospitalTypes, "HospitalTypeId", "HospitalTypeName");
+            ViewBag.Divisions = new SelectList(divisions, "DivisionId", "DivisionName");
+            ViewBag.Districts = new SelectList(districts, "DistrictId", "DistrictName");
+
             return View();
         }
 
@@ -71,6 +77,9 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
             var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
             ViewBag.HospitalTypes = hospitalTypes;
+
+            var divisions = _mstHospitalRegistrationBAL.GetDivision();
+            ViewBag.Division = divisions;
 
             return View(result);
         }
@@ -121,6 +130,23 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
             {
                 return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
+        }
+
+
+
+        [HttpGet]
+        public IActionResult GetAllDivision()
+        {
+            var divisions = _mstHospitalRegistrationBAL.GetDivision();
+            return View(divisions);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetAllDistrict(int DivisionId)
+        {
+            var districts = _mstHospitalRegistrationBAL.GetDistrict(DivisionId);
+            return Json(districts);
         }
     }
 }

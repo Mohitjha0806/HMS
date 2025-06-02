@@ -31,6 +31,7 @@ namespace HospitalManagement.Infrastructure.Repository
                 Address = mstHospitalRegistrationVM.Address,
                 Email = mstHospitalRegistrationVM.Email,
                 ContactNumber = mstHospitalRegistrationVM.ContactNumber,
+                DivisionId = mstHospitalRegistrationVM.DivisionId,
                 IsActive = mstHospitalRegistrationVM.IsActive
             };
 
@@ -49,6 +50,8 @@ namespace HospitalManagement.Infrastructure.Repository
             return (from mhms in _context.MstHospitalRegistration
                     join htm in _context.HospitalTypeModel
                     on mhms.HospitalTypeId equals htm.HospitalTypeId
+                    join mds in _context.MstDivision
+                    on mhms.DivisionId equals mds.DivisionId
                     orderby mhms.HospitalId descending
                     select new MstHospitalRegistrationVM
                     {
@@ -61,6 +64,7 @@ namespace HospitalManagement.Infrastructure.Repository
                         Address = mhms.Address,
                         Email = mhms.Email,
                         ContactNumber = mhms.ContactNumber,
+                        DivisionName = mds.DivisionName,
                         IsActive = mhms.IsActive
                     }).ToList();
         }
@@ -80,6 +84,7 @@ namespace HospitalManagement.Infrastructure.Repository
                         Address = mhms.Address,
                         Email = mhms.Email,
                         ContactNumber = mhms.ContactNumber,
+                        DivisionId = mhms.DivisionId,
                         IsActive = mhms.IsActive
                     }).FirstOrDefault() ?? throw new InvalidOperationException($"Hospital with ID {hospitalId} not found.");
         }
@@ -110,5 +115,22 @@ namespace HospitalManagement.Infrastructure.Repository
 
 
         }
+
+        public List<MstDivision> GetDivisions()
+        {
+
+            return _context.MstDivision
+                .Where(h => h.IsActive == true)
+                .ToList();
+        }
+
+        public List<MstDistrict> GetDistricts(int DivisionId)
+        {
+
+            return _context.MstDistrict
+                .Where(h => h.IsActive && h.DivisionId == DivisionId) // Ensure these properties exist in MstDistrict
+                .ToList();
+        }
+
     }
 }

@@ -43,6 +43,11 @@ namespace HospitalManagement.Entities.Models
         [Phone]
         [StringLength(15)]
         public required string ContactNumber { get; set; }
+
+        public  int DivisionId { get; set; }
+        public  int DistrictId { get; set; }
+        public  int BlockId { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

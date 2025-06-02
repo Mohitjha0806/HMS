@@ -6,6 +6,9 @@
 @model HospitalManagement.Entities.Models.MstHospitalRegistration
 @{
     var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
+    var divisions = ViewBag.Division as List<MstDivision>;
+    var districts = ViewBag.District as List<MstDistrict>;
+    var Blocks = ViewBag.Block as List<MstBlock>;
 }
 <script>
     window.onload = function () {
@@ -71,8 +74,29 @@
                         <input id="txtStaffCount" type="number" min="0" max="50" class="form-control" placeholder="Enter Count" asp-for="StaffCount" required />
                     </div>
                     <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Division Name</label>
+                        <select class="form-select" id="DivisionDropdown" asp-for="DivisionId" asp-items="ViewBag.divisions" required>
+                            <option selected disabled>Choose...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter District Name</label>
+                        <select class="form-select" id="DistrictDropdown" asp-for="DistrictId" asp-items="ViewBag.districts" required>
+                            <option selected disabled>Choose...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Block Name</label>
+                        <select class="form-select" id="BlockDropdown" asp-for="BlockId" asp-items="ViewBag.blocks" required>
+                            <option selected disabled>Choose...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row px-4">
+                    <div class="col-md-3 px-2">
                         <label class="form-label">Enter Hospital Address</label>
                         <input id="HospitalAddress" type="text" class="form-control" placeholder="Enter Address" asp-for="Address" required />
+
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Email Id</label>
@@ -82,12 +106,11 @@
                         <label class="form-label">Enter Contact Number</label>
                         <input id="txtContectNumber" type="tel" pattern="[0-9]{10}" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
                     </div>
-                </div>
-                <div class="row px-4">
-                    <div class="form-check">
-                        <input class="form-check-input fs-5" asp-for="IsActive" type="checkbox">
-                        <label class="form-check-label">Is Active</label>
-
+                    <div class="col-md-3 px-4">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input fs-5" asp-for="IsActive" type="checkbox">
+                            <label class="form-check-label">Is Active</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row px-3">
@@ -102,9 +125,8 @@
     </div>
 </div>
 <script src="~/dist/jquery-3.7.1.min.js"></script>
-<script>
 
-    <script>
+<script>
     $(document).ready(function () {
         $("#btnSave").click(function (event) {
             event.preventDefault();
@@ -113,6 +135,7 @@
             if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
             if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
             if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
+            if (!$("#DivisionDropdown").val()) errormsg += "Division is required.\n";
             if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
             if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
             if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
@@ -140,4 +163,40 @@
             });
         });
     });
+</script>
+<script>
+        $(document).ready(function () {
+        $('#DivisionDropdown').change(function () {
+            debugger;
+            var divisionId = $(this).val();
+            if (divisionId) {
+                $.getJSON('/MstHospitalRegistration/GetAllDistrict', { divisionId: divisionId }, function (data) {
+                    var options = '<option value="">Select District</option>';
+                    $.each(data, function (index, item) {
+                        options += '<option value="' + item.id + '">' + item.name + '</option>';
+                    });
+                    $('#DistrictDropdown').html(options);
+                    $('#BlockDropdown').html('<option value="">Select Block</option>');
+                }).fail(function() {
+                    alert('Failed to load districts.');
+                });
+            }
+        });
+
+        $('#DistrictDropdown').change(function () {
+            var districtId = $(this).val();
+            if (districtId) {
+                $.getJSON('/MstHospitalRegistration/GetBlocks', { districtId: districtId }, function (data) {
+                    var options = '<option value="">Select Block</option>';
+                    $.each(data, function (index, item) {
+                        options += '<option value="' + item.id + '">' + item.name + '</option>';
+                    });
+                    $('#BlockDropdown').html(options);
+                }).fail(function() {
+                    alert('Failed to load blocks.');
+                });
+            }
+        });
+    });
+
 </script>

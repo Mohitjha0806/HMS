@@ -4,6 +4,7 @@ using HospitalManagement.Infrastructure.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
 {
@@ -60,6 +61,7 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
                 StaffCount = mstHospitalRegistrationVM.StaffCount,
                 Email = mstHospitalRegistrationVM.Email,
                 ContactNumber = mstHospitalRegistrationVM.ContactNumber,
+                DivisionId = mstHospitalRegistrationVM.DivisionId,
                 IsActive = mstHospitalRegistrationVM.IsActive
             };
 
@@ -77,6 +79,19 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
 
                 throw;
             }
+        }
+
+
+        public List<MstDivision> GetDivision()
+        {
+            return _unitOfWork.MstHospitalRegistrationRepository.GetDivisions();
+        }
+
+        
+
+        public IEnumerable GetDistrict(int DivisionId)
+        {
+            return _unitOfWork.MstHospitalRegistrationRepository.GetDistricts(DivisionId);
         }
     }
 }

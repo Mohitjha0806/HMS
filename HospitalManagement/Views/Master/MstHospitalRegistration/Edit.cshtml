@@ -5,9 +5,14 @@
 @model HospitalManagement.Entities.ViewModel.MstHospitalRegistrationVM
 @{
     var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
+    var divisions = ViewBag.Division as List<MstDivision>;
     if (hospitalTypes == null)
     {
-        hospitalTypes = new List<HospitalTypeModel>(); // Provide a default empty list if null
+        hospitalTypes = new List<HospitalTypeModel>();
+    }
+    if (divisions == null)
+    {
+        divisions = new List<MstDivision>();
     }
 }
 <script>
@@ -44,7 +49,7 @@
     </div>
     <div class="card-body">
         <form asp-action="UpdateHospital" id="formCreate" method="post">
-            <input type="hidden" asp-for="HospitalId" id="HospitalID" name="HospitalID"/>
+            <input type="hidden" asp-for="HospitalId" id="HospitalID" name="HospitalID" />
 
             <div class="form-group">
                 <div class="row px-3">
@@ -73,8 +78,35 @@
                         <input id="txtStaffCount" type="number" min="0" max="50" class="form-control" placeholder="Enter Count" asp-for="StaffCount" required />
                     </div>
                     <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Division Name</label>
+                        <select class="form-select" id="DivisionDropdown" asp-for="DivisionId" asp-items="@(new SelectList(divisions, "DivisionId", "DivisionName"))" required>
+                            <option selected disabled>Choose...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter District Name</label>
+                        <select class="form-select" id="DistrictDropdown">
+                            <option selected disabled>Choose...</option>
+                            <option>Bhopal</option>
+                            <option>Indore</option>
+                            <option>Narmdapuram</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Block Name</label>
+                        <select class="form-select" id="BlockDropdown" required>
+                            <option selected disabled>Choose...</option>
+                            <option>Phanda - (New City)</option>
+                            <option>Palasia</option>
+                            <option>Hoshangabad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row px-4">
+                    <div class="col-md-3 px-2">
                         <label class="form-label">Enter Hospital Address</label>
                         <input id="HospitalAddress" type="text" class="form-control" placeholder="Enter Address" asp-for="Address" required />
+
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Email Id</label>
@@ -82,13 +114,13 @@
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Contact Number</label>
-                        <input id="txtContactNumber" type="tel" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" required />
+                        <input id="txtContectNumber" type="tel" pattern="[0-9]{10}" class="form-control" placeholder="9893*******" asp-for="ContactNumber" maxlength="10" />
                     </div>
-                </div>
-                <div class="row px-4">
-                    <div class="form-check">
-                        <label class="form-check-label" for="checkChecked">IsActive</label>
-                        <input class="form-check-input fs-5" asp-for="IsActive">
+                    <div class="col-md-3 px-4">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input fs-5" asp-for="IsActive" type="checkbox">
+                            <label class="form-check-label">Is Active</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row px-3">
@@ -113,6 +145,7 @@
             if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
             if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
             if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
+            if (!$("#DivisionDropdown").val()) errormsg += "Block is required.\n";
             if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
             if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
             if (!$("#txtContactNumber").val()) errormsg += "Contact Number is required.\n";
