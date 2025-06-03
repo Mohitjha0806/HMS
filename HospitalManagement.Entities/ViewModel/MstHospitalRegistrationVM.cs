@@ -30,9 +30,12 @@ namespace HospitalManagement.Entities.ViewModel
         public required string ContactNumber { get; set; }
         public int DivisionId { get; set; }
         public int DistrictId { get; set; }
+        public int BlockId { get; set; }
         public bool IsActive { get; set; }
 
 
         public  string? DivisionName { get; set; }
+        public string? DistrictName { get; set; }
+        public string? BlockName { get; set; }
     }
 }

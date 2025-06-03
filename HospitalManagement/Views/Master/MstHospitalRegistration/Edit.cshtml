@@ -6,6 +6,8 @@
 @{
     var hospitalTypes = ViewBag.HospitalTypes as List<HospitalTypeModel>;
     var divisions = ViewBag.Division as List<MstDivision>;
+    var districts = ViewBag.District as List<MstDistrict>;
+    var blocks = ViewBag.Block as List<MstBlock>;
     if (hospitalTypes == null)
     {
         hospitalTypes = new List<HospitalTypeModel>();
@@ -13,6 +15,14 @@
     if (divisions == null)
     {
         divisions = new List<MstDivision>();
+    }
+    if (districts == null)
+    {
+        districts = new List<MstDistrict>();
+    }
+    if (blocks == null)
+    {
+        blocks = new List<MstBlock>();
     }
 }
 <script>
@@ -77,6 +87,13 @@
                         <label class="form-label">Enter Staff Count</label>
                         <input id="txtStaffCount" type="number" min="0" max="50" class="form-control" placeholder="Enter Count" asp-for="StaffCount" required />
                     </div>
+                   @*  <div class="col-md-3 px-2">
+                        <label class="form-label">Enter Division Name</label>
+                        <select class="form-select" id="DivisionDropdown" asp-for="DivisionId" asp-items="@(new SelectList(divisions, "DivisionId", "DivisionName"))" required>
+                            <option selected disabled>Choose...</option>
+                        </select>
+                    </div> *@
+
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Division Name</label>
                         <select class="form-select" id="DivisionDropdown" asp-for="DivisionId" asp-items="@(new SelectList(divisions, "DivisionId", "DivisionName"))" required>
@@ -85,20 +102,14 @@
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter District Name</label>
-                        <select class="form-select" id="DistrictDropdown">
+                        <select class="form-select" id="DistrictDropdown" asp-for="DistrictId" asp-items="@(new SelectList(districts, "DistrictId", "DistrictName"))" required>
                             <option selected disabled>Choose...</option>
-                            <option>Bhopal</option>
-                            <option>Indore</option>
-                            <option>Narmdapuram</option>
                         </select>
                     </div>
                     <div class="col-md-3 px-2">
                         <label class="form-label">Enter Block Name</label>
-                        <select class="form-select" id="BlockDropdown" required>
+                        <select class="form-select" id="BlockDropdown" asp-for="BlockId" asp-items="@(new SelectList(blocks, "BlockId", "BlockName"))" required>
                             <option selected disabled>Choose...</option>
-                            <option>Phanda - (New City)</option>
-                            <option>Palasia</option>
-                            <option>Hoshangabad</option>
                         </select>
                     </div>
                 </div>
@@ -172,6 +183,45 @@
                     $("#formCreate").submit();
                 }
             });
+        });
+    });
+</script>
+<script>
+        $(document).ready(function () {
+        $('#DivisionDropdown').change(function () {
+            var divisionId = $(this).val();
+            if (divisionId) {
+                $.getJSON('/MstHospitalRegistration/GetAllDistrict', { divisionId: divisionId }, function (data) {
+                    console.log("Received Districts:", data);
+                    var options = '<option value="">Select District</option>';
+                    $.each(data, function (index, item) {
+                        console.log("District Item:", item);
+                        options += '<option value="' + (item.id || item.districtId) + '">' + (item.name || item.districtName) + '</option>';
+                    });
+                    $('#DistrictDropdown').html(options);
+                    $('#BlockDropdown').html('<option value="">Select Block</option>'); // Reset Block dropdown
+                }).fail(function() {
+                    alert('Failed to load districts.');
+                });
+            }
+        });
+
+        $('#DistrictDropdown').change(function () {
+            var districtId = $(this).val();
+            console.log("Selected District ID:", districtId); // Log the districtId
+            if (districtId) {
+                $.getJSON('/MstHospitalRegistration/GetAllBlock', { districtId: districtId }, function (data) {
+                    console.log("Received Blocks:", data);
+                    var options = '<option value="">Select Block</option>';
+                    $.each(data, function (index, item) {
+                        console.log("Block Item:", item);
+                        options += '<option value="' + (item.id || item.blockId) + '">' + (item.name || item.blockName) + '</option>';
+                    });
+                    $('#BlockDropdown').html(options);
+                }).fail(function() {
+                    alert('Failed to load blocks.');
+                });
+            }
         });
     });
 </script>

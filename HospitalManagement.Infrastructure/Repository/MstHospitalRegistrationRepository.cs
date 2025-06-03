@@ -32,6 +32,8 @@ namespace HospitalManagement.Infrastructure.Repository
                 Email = mstHospitalRegistrationVM.Email,
                 ContactNumber = mstHospitalRegistrationVM.ContactNumber,
                 DivisionId = mstHospitalRegistrationVM.DivisionId,
+                DistrictId = mstHospitalRegistrationVM.DistrictId,
+                BlockId = mstHospitalRegistrationVM.BlockId,
                 IsActive = mstHospitalRegistrationVM.IsActive
             };
 
@@ -52,6 +54,10 @@ namespace HospitalManagement.Infrastructure.Repository
                     on mhms.HospitalTypeId equals htm.HospitalTypeId
                     join mds in _context.MstDivision
                     on mhms.DivisionId equals mds.DivisionId
+                    join mdist in _context.MstDistrict
+                    on mhms.DistrictId equals mdist.DistrictId
+                    join mBlock in _context.MstBlock
+                    on mhms.BlockId equals mBlock.BlockId
                     orderby mhms.HospitalId descending
                     select new MstHospitalRegistrationVM
                     {
@@ -65,11 +71,13 @@ namespace HospitalManagement.Infrastructure.Repository
                         Email = mhms.Email,
                         ContactNumber = mhms.ContactNumber,
                         DivisionName = mds.DivisionName,
+                        DistrictName = mdist.DistrictName,
+                        BlockName = mBlock.BlockName,
                         IsActive = mhms.IsActive
                     }).ToList();
         }
 
-        public MstHospitalRegistrationVM GetHospitalById(int hospitalId)
+        public MstHospitalRegistrationVM GetHospitalById(int hospitalId, int divisionId, int districtId, int blockId,)
         {
             return (from mhms in _context.MstHospitalRegistration
                     where mhms.HospitalId == hospitalId
@@ -85,6 +93,8 @@ namespace HospitalManagement.Infrastructure.Repository
                         Email = mhms.Email,
                         ContactNumber = mhms.ContactNumber,
                         DivisionId = mhms.DivisionId,
+                        DistrictId = mhms.DistrictId,
+                        BlockId = mhms.BlockId,
                         IsActive = mhms.IsActive
                     }).FirstOrDefault() ?? throw new InvalidOperationException($"Hospital with ID {hospitalId} not found.");
         }
@@ -118,7 +128,6 @@ namespace HospitalManagement.Infrastructure.Repository
 
         public List<MstDivision> GetDivisions()
         {
-
             return _context.MstDivision
                 .Where(h => h.IsActive == true)
                 .ToList();

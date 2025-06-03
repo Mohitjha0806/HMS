@@ -125,8 +125,50 @@
     </div>
 </div>
 <script src="~/dist/jquery-3.7.1.min.js"></script>
-<script>
+@* <script>
        $(document).ready(function () {
+        $("#btnSave").click(function (event) {
+            event.preventDefault();
+            let errormsg = "";
+
+            if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
+            if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
+            if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
+            if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
+            if (!$("#DivisionDropdown").val()) errormsg += "Division is required.\n";
+            if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
+            if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
+            if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
+            if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
+
+            if (errormsg !== "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: errormsg
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Do you want to Save the Record?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085D6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes!',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#formCreate").unbind('submit').submit(); // Unbind previous submit handlers and submit the form
+                }
+            });
+        });
+    });
+
+</script> *@
+<script>
+         $(document).ready(function () {
         $('#DivisionDropdown').change(function () {
             var divisionId = $(this).val();
             if (divisionId) {
@@ -135,7 +177,7 @@
                     var options = '<option value="">Select District</option>';
                     $.each(data, function (index, item) {
                         console.log("District Item:", item);
-                        options += '<option value="' + (item.id || item.id) + '">' + (item.name || item.districtName) + '</option>';
+                        options += '<option value="' + (item.id || item.districtId) + '">' + (item.name || item.districtName) + '</option>';
                     });
                     $('#DistrictDropdown').html(options);
                     $('#BlockDropdown').html('<option value="">Select Block</option>'); // Reset Block dropdown
@@ -147,13 +189,14 @@
 
         $('#DistrictDropdown').change(function () {
             var districtId = $(this).val();
+            console.log("Selected District ID:", districtId); // Log the districtId
             if (districtId) {
-                $.getJSON('/MstHospitalRegistration/GetBlocks', { districtId: districtId }, function (data) {
-                    console.log("Received Blocks:", data); // Debugging
+                $.getJSON('/MstHospitalRegistration/GetAllBlock', { districtId: districtId }, function (data) {
+                    console.log("Received Blocks:", data);
                     var options = '<option value="">Select Block</option>';
                     $.each(data, function (index, item) {
                         console.log("Block Item:", item);
-                        options += '<option value="' + (item.id || item.id) + '">' + (item.name || item.blockName) + '</option>';
+                        options += '<option value="' + (item.id || item.blockId) + '">' + (item.name || item.blockName) + '</option>';
                     });
                     $('#BlockDropdown').html(options);
                 }).fail(function() {
@@ -162,43 +205,6 @@
             }
         });
     });
+
 </script>
 
-<script>
-    $(document).ready(function () {
-        $("#btnSave").click(function (event) {
-            event.preventDefault();
-            let errormsg = "";
-           if (!$("#txtHospitalName").val()) errormsg += "Hospital Name is required.\n";
-            if (!$("#hospitalTypeDropdown").val()) errormsg += "Hospital Type is required.\n";
-            if (!$("#txtOwnerName").val()) errormsg += "Owner Name is required.\n";
-            if (!$("#txtMedicalLicenseNumber").val()) errormsg += "Medical License Number is required.\n";
-            if (!$("#DivisionDropdown").val()) errormsg += "Division is required.\n";
-            if (!$("#txtStaffCount").val()) errormsg += "Staff Count is required.\n";
-            if (!$("#HospitalAddress").val()) errormsg += "Hospital Address is required.\n";
-            if (!$("#txtEmail").val()) errormsg += "Email is required.\n";
-            if (!$("#txtContectNumber").val()) errormsg += "Contact Number is required.\n";
-            if (errormsg !== "") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validation Error',
-                    text: errormsg
-                });
-                return;
-            }
-            Swal.fire({
-                title: 'Do you want to Save the Record?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085D6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes!',
-                cancelButtonText: 'No'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $("#formCreate").submit();
-                }
-            });
-        });
-    });
-</script>

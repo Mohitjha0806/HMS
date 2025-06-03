@@ -1,12 +1,9 @@
 ﻿using HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL;
-using HospitalManagement.Data;
-using HospitalManagement.Entities.Models;
 using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Infrastructure.Contracts;
 using HospitalManagement.Utilities.enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 {
@@ -65,7 +62,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         }
 
         [HttpGet]
-        public IActionResult Edit(int hospitalId)
+        public IActionResult Edit(int hospitalId, int divisionId, int districtId, int blockId)
         {
             if (hospitalId <= 0)
             {
@@ -87,8 +84,15 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
             return View(result);
         }
 
+        [HttpGet]
+        public IActionResult GetAllHospitals()
+        {
+            var hospitals = _mstHospitalRegistrationBAL.GetAllHospitals();
+            return View(hospitals);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        public async Task<IActionResult> UpdateHospital(int hospitalId, int districtId, int blockId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
             if (!ModelState.IsValid)
             {
@@ -97,7 +101,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
             try
             {
-                await _mstHospitalRegistrationBAL.UpdateHospital(hospitalId, mstHospitalRegistrationVM);
+                await _mstHospitalRegistrationBAL.UpdateHospital(hospitalId, districtId, blockId,  mstHospitalRegistrationVM);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -106,44 +110,6 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
                 return View(mstHospitalRegistrationVM);
             }
         }
-
-        [HttpGet]
-        public IActionResult GetAllHospitals()
-        {
-            var hospitals = _mstHospitalRegistrationBAL.GetAllHospitals();
-            return View(hospitals);
-        }
-
-        public IActionResult Delete(int hospitalId)
-        {
-            try
-            {
-                var deleteTask = _mstHospitalRegistrationBAL.DeleteHospital(hospitalId);
-                deleteTask.Wait(); 
-                bool isDeleted = deleteTask.IsCompletedSuccessfully;
-
-                if (!isDeleted)
-                {
-                    return NotFound(new { message = "Hospital not found." });
-                }
-                return RedirectToAction("Index");
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
-            }
-        }
-
-
-
-        [HttpGet]
-        public IActionResult GetAllDivision()
-        {
-            var divisions = _mstHospitalRegistrationBAL.GetDivision();
-            return View(divisions);
-        }
-
 
         [HttpGet]
         public JsonResult GetAllDistrict(int DivisionId)
@@ -157,6 +123,27 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         {
             var blocks = _mstHospitalRegistrationBAL.GetBlock(DistrictId);
             return Json(blocks);
+        }
+
+        public IActionResult Delete(int hospitalId)
+        {
+            try
+            {
+                var deleteTask = _mstHospitalRegistrationBAL.DeleteHospital(hospitalId);
+                deleteTask.Wait();
+                bool isDeleted = deleteTask.IsCompletedSuccessfully;
+
+                if (!isDeleted)
+                {
+                    return NotFound(new { message = "Hospital not found." });
+                }
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
         }
     }
 }
