@@ -126,9 +126,28 @@ namespace HospitalManagement.Infrastructure.Repository
 
         public List<MstDistrict> GetDistricts(int DivisionId)
         {
-
             return _context.MstDistrict
-                .Where(h => h.IsActive && h.DivisionId == DivisionId) // Ensure these properties exist in MstDistrict
+                .Where(d => d.DivisionId == DivisionId)
+                .Select(d => new MstDistrict
+                {
+                    DistrictId = d.DistrictId,
+                    DistrictName = d.DistrictName,
+                    IsActive = d.IsActive,
+                    DivisionId = d.DivisionId
+                })
+                .ToList();
+        }
+        public List<MstBlock> GetBlocks(int DistrictId)
+        {
+            return _context.MstBlock
+                .Where(d => d.DistrictId == DistrictId)
+                .Select(d => new MstBlock
+                {
+                    BlockId = d.BlockId,
+                    BlockName = d.BlockName,
+                    IsActive = d.IsActive,
+                    DistrictId = d.DistrictId
+                })
                 .ToList();
         }
 

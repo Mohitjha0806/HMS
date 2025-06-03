@@ -3,9 +3,10 @@ using HospitalManagement.Data;
 using HospitalManagement.Entities.Models;
 using HospitalManagement.Entities.ViewModel;
 using HospitalManagement.Infrastructure.Contracts;
+using HospitalManagement.Utilities.enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using HospitalManagement.Utilities.enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 {
@@ -29,15 +30,17 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         }
 
         [HttpGet]
-        public IActionResult Create(int DivisionId)
+        public IActionResult Create(int DivisionId, int DistrictId)
         {
             var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
             var divisions = _mstHospitalRegistrationBAL.GetDivision();
             var districts = _mstHospitalRegistrationBAL.GetDistrict(DivisionId);
+            var blocks = _mstHospitalRegistrationBAL.GetBlock(DistrictId);
 
             ViewBag.HospitalTypes = new SelectList(hospitalTypes, "HospitalTypeId", "HospitalTypeName");
             ViewBag.Divisions = new SelectList(divisions, "DivisionId", "DivisionName");
             ViewBag.Districts = new SelectList(districts, "DistrictId", "DistrictName");
+            ViewBag.Blocks = new SelectList(blocks, "BlockId", "BlockName");
 
             return View();
         }
@@ -147,6 +150,13 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
         {
             var districts = _mstHospitalRegistrationBAL.GetDistrict(DivisionId);
             return Json(districts);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllBlock(int DistrictId)
+        {
+            var blocks = _mstHospitalRegistrationBAL.GetBlock(DistrictId);
+            return Json(blocks);
         }
     }
 }

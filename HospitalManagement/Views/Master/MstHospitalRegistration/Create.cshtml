@@ -125,6 +125,44 @@
     </div>
 </div>
 <script src="~/dist/jquery-3.7.1.min.js"></script>
+<script>
+       $(document).ready(function () {
+        $('#DivisionDropdown').change(function () {
+            var divisionId = $(this).val();
+            if (divisionId) {
+                $.getJSON('/MstHospitalRegistration/GetAllDistrict', { divisionId: divisionId }, function (data) {
+                    console.log("Received Districts:", data);
+                    var options = '<option value="">Select District</option>';
+                    $.each(data, function (index, item) {
+                        console.log("District Item:", item);
+                        options += '<option value="' + (item.id || item.id) + '">' + (item.name || item.districtName) + '</option>';
+                    });
+                    $('#DistrictDropdown').html(options);
+                    $('#BlockDropdown').html('<option value="">Select Block</option>'); // Reset Block dropdown
+                }).fail(function() {
+                    alert('Failed to load districts.');
+                });
+            }
+        });
+
+        $('#DistrictDropdown').change(function () {
+            var districtId = $(this).val();
+            if (districtId) {
+                $.getJSON('/MstHospitalRegistration/GetBlocks', { districtId: districtId }, function (data) {
+                    console.log("Received Blocks:", data); // Debugging
+                    var options = '<option value="">Select Block</option>';
+                    $.each(data, function (index, item) {
+                        console.log("Block Item:", item);
+                        options += '<option value="' + (item.id || item.id) + '">' + (item.name || item.blockName) + '</option>';
+                    });
+                    $('#BlockDropdown').html(options);
+                }).fail(function() {
+                    alert('Failed to load blocks.');
+                });
+            }
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {
@@ -163,40 +201,4 @@
             });
         });
     });
-</script>
-<script>
-        $(document).ready(function () {
-        $('#DivisionDropdown').change(function () {
-            debugger;
-            var divisionId = $(this).val();
-            if (divisionId) {
-                $.getJSON('/MstHospitalRegistration/GetAllDistrict', { divisionId: divisionId }, function (data) {
-                    var options = '<option value="">Select District</option>';
-                    $.each(data, function (index, item) {
-                        options += '<option value="' + item.id + '">' + item.name + '</option>';
-                    });
-                    $('#DistrictDropdown').html(options);
-                    $('#BlockDropdown').html('<option value="">Select Block</option>');
-                }).fail(function() {
-                    alert('Failed to load districts.');
-                });
-            }
-        });
-
-        $('#DistrictDropdown').change(function () {
-            var districtId = $(this).val();
-            if (districtId) {
-                $.getJSON('/MstHospitalRegistration/GetBlocks', { districtId: districtId }, function (data) {
-                    var options = '<option value="">Select Block</option>';
-                    $.each(data, function (index, item) {
-                        options += '<option value="' + item.id + '">' + item.name + '</option>';
-                    });
-                    $('#BlockDropdown').html(options);
-                }).fail(function() {
-                    alert('Failed to load blocks.');
-                });
-            }
-        });
-    });
-
 </script>

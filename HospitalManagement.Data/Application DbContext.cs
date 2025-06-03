@@ -13,7 +13,7 @@ namespace HospitalManagement.Data
         public DbSet<HospitalTypeModel> HospitalTypeModel { get; set; }
         public DbSet<MstDivision> MstDivision { get; set; }
         public DbSet<MstDistrict> MstDistrict { get; set; }
-        //public DbSet<MstBlock> MstBlock { get; set; }
+        public DbSet<MstBlock> MstBlock { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

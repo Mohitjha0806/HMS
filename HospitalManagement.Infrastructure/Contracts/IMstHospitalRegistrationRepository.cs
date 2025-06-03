@@ -15,5 +15,6 @@ namespace HospitalManagement.Infrastructure.Contracts
         public Task DeleteHospital(int hospitalId);
         public List<MstDivision> GetDivisions();
         public List<MstDistrict> GetDistricts(int DivisionId);
+        public List<MstBlock> GetBlocks(int DistrictId);
     }
 }

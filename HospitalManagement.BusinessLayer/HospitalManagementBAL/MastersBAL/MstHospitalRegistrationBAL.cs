@@ -86,12 +86,13 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
         {
             return _unitOfWork.MstHospitalRegistrationRepository.GetDivisions();
         }
-
-        
-
         public IEnumerable GetDistrict(int DivisionId)
         {
             return _unitOfWork.MstHospitalRegistrationRepository.GetDistricts(DivisionId);
+        }
+        public IEnumerable GetBlock(int DistrictId)
+        {
+            return _unitOfWork.MstHospitalRegistrationRepository.GetBlocks(DistrictId);
         }
     }
 }
