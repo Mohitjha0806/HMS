@@ -32,19 +32,10 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
             return _unitOfWork.MstHospitalRegistrationRepository.GetAllHospitals();
         }
 
-        public MstHospitalRegistrationVM GetHospitalById(int hospitalId, int divisionId, int districtId, int blockId)
-        {
-            var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
-            if (hospital == null)
-            {
-                throw new Exception("Hospital not found.");
-            }
-            return hospital;
-        }
-
+       
         public async Task UpdateHospital(int hospitalId, int divisionId, int districtId, int blockId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
         {
-            var existingHospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId, divisionId, districtId, blockId);
+            var existingHospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
             if (existingHospital == null)
             {
                 throw new Exception("Hospital not found for update.");
@@ -93,6 +84,21 @@ namespace HospitalManagement.BusinessLayer.HospitalManagementBAL.MastersBAL
         public IEnumerable GetBlock(int DistrictId)
         {
             return _unitOfWork.MstHospitalRegistrationRepository.GetBlocks(DistrictId);
+        }
+
+        public async Task UpdateHospital(int hospitalId, MstHospitalRegistrationVM mstHospitalRegistrationVM)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetHospitalById(int hospitalId)
+        {
+            var hospital = _unitOfWork.MstHospitalRegistrationRepository.GetHospitalById(hospitalId);
+            if (hospital == null)
+            {
+                throw new Exception("Hospital not found.");
+            }
+            return hospital;
         }
     }
 }

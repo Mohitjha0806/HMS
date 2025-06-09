@@ -101,7 +101,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
             try
             {
-                await _mstHospitalRegistrationBAL.UpdateHospital(hospitalId, districtId, blockId,  mstHospitalRegistrationVM);
+                await _mstHospitalRegistrationBAL.UpdateHospital(hospitalId,  mstHospitalRegistrationVM);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
 
         [HttpGet]
         public JsonResult GetAllDistrict(int DivisionId)
-        {
+            {
             var districts = _mstHospitalRegistrationBAL.GetDistrict(DivisionId);
             return Json(districts);
         }

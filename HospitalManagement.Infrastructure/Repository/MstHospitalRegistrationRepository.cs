@@ -77,7 +77,7 @@ namespace HospitalManagement.Infrastructure.Repository
                     }).ToList();
         }
 
-        public MstHospitalRegistrationVM GetHospitalById(int hospitalId, int divisionId, int districtId, int blockId,)
+        public MstHospitalRegistrationVM GetHospitalById(int hospitalId)
         {
             return (from mhms in _context.MstHospitalRegistration
                     where mhms.HospitalId == hospitalId
@@ -160,5 +160,6 @@ namespace HospitalManagement.Infrastructure.Repository
                 .ToList();
         }
 
+       
     }
 }
