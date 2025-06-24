@@ -75,7 +75,7 @@ namespace HospitalManagement.Web.Controllers.HospitalManagement.Master
                 return NotFound("Hospital not found.");
             }
 
-            var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes(int );
+            var hospitalTypes = _mstHospitalRegistrationBAL.GetHospitalTypes();
             ViewBag.HospitalTypes = hospitalTypes;
 
             var divisions = _mstHospitalRegistrationBAL.GetDivision();
